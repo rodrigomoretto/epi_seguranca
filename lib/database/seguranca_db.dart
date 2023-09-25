@@ -44,8 +44,29 @@ class SegurancaDB {
         'nome TEXT NOT NULL, '
         'username TEXT NOT NULL, '
         'senha TEXT NOT NULL, '
-        'cadastro TEXT NOT NULL'
       ');'
+    );
+
+    await database.insert(
+      tableUsuario,
+      {
+        'id': 0,
+        'nome': 'Guilherme',
+        'username': 'guilherme',
+        'senha': '12345',
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+
+    await database.insert(
+      tableUsuario,
+      {
+        'id': 1,
+        'nome': 'Daniel',
+        'username': 'daniel',
+        'senha': '54321',
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 }
