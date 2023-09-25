@@ -3,10 +3,12 @@ import 'package:sqflite/sqflite.dart';
 class SegurancaDB {
   final tableFuncionario = 'funcionario';
   final tableEpi = 'epi';
+  final tableUsuario = 'usuario';
 
   Future<void> createTables(Database database) async {
     await createTableFuncionario(database);
     await createTableEpi(database);
+    await createTableUsuario(database);
   }
 
   Future<void> createTableFuncionario(Database database) async {
@@ -30,6 +32,18 @@ class SegurancaDB {
         'descricao TEXT NOT NULL, '
         'estoque INTEGER NOT NULL, '
         'dataValidade TEXT NOT NULL, '
+        'cadastro TEXT NOT NULL'
+      ');'
+    );
+  }
+
+  Future<void> createTableUsuario(Database database) async {
+    await database.execute(
+      'CREATE TABLE IF NOT EXISTS $tableEpi ('
+        'id INTEGER PRIMARY KEY AUTOINCREMENT, '
+        'nome TEXT NOT NULL, '
+        'username TEXT NOT NULL, '
+        'senha TEXT NOT NULL, '
         'cadastro TEXT NOT NULL'
       ');'
     );
