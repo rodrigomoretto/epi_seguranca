@@ -5,23 +5,23 @@ import 'package:flutter/material.dart';
 
 class LoginController {
 
-  Future<bool> verificaLogin(String usuario, String senha) async {
+  Future<Usuario?> verificaLogin(String usuario, String senha) async {
     Usuario? user = await UsuarioController().fetchByUsernameUsuario(usuario);
 
     if (user != null) {
       if (user.senha == senha) {
-        return true;
+        return user;
       }
       else {
-        return false;
+        return null;
       }
     } else {
-      return false;
+      return null;
     }
   }
 
-  static void goToHome(BuildContext context) {
+  static void goToHome(BuildContext context, String usuario) {
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => const HomeView()));
+        MaterialPageRoute(builder: (context) => HomeView(username: usuario,)));
   }
 }

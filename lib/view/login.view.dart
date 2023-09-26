@@ -58,7 +58,7 @@ class _LoginViewState extends State<LoginView> {
                       final resultado = await LoginController().verificaLogin(
                         _usernameController.text, _senhaController.text
                       );
-                      if (!resultado) {
+                      if (resultado == null) {
                         if (!context.mounted) return;
                         showAdaptiveDialog(
                           context: context,
@@ -77,7 +77,7 @@ class _LoginViewState extends State<LoginView> {
                         _senhaController.clear();
                       } else {
                         if (!context.mounted) return;
-                        LoginController.goToHome(context);
+                        LoginController.goToHome(context, resultado.nome);
                       }
                     }
                   },

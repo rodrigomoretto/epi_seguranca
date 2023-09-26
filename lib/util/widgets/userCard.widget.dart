@@ -2,8 +2,8 @@ import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:flutter/material.dart';
 
 class UserCard extends StatelessWidget {
-  final String usuario = 'Daniel';
-  const UserCard({super.key});
+  final String? usuario;
+  const UserCard({required this.usuario, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class UserCard extends StatelessWidget {
                 style: TextStyle(fontSize: 18),
               ),
               Text(
-                usuario,
+                usuario ?? '',
                 style: const TextStyle(
                   fontSize: 48,
                   fontWeight: FontWeight.bold,

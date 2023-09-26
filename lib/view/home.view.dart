@@ -8,7 +8,8 @@ import 'package:epi_seguranca/util/widgets/userCard.widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  final String? username;
+  const HomeView({this.username, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,9 @@ class HomeView extends StatelessWidget {
             const Logo(),
             Column(
               children: <Widget>[
-                const UserCard(),
+                UserCard(
+                  usuario: username,
+                ),
                 CardWrapper(
                   children: <Widget>[
                     CustomCard(
