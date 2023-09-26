@@ -14,8 +14,8 @@ class FuncionarioController {
         'departamento TEXT NOT NULL, '
         'cargo TEXT NOT NULL, '
         'observacao TEXT, '
-        'cadastro TEXT NOT NULL, '
-        ')');
+        'cadastro TEXT NOT NULL'
+      ')');
   }
 
   Future<int> createFuncionario({
