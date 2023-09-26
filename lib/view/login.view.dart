@@ -45,6 +45,7 @@ class _LoginViewState extends State<LoginView> {
                     validador: (value) => value != null && value.isEmpty
                       ? LoginConstants.senhaValidacao
                       : null,
+                    esconder: true,
                   ),
                 ),
               ],

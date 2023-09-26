@@ -6,9 +6,10 @@ class CustomTextForm extends StatefulWidget {
   final TextInputType? teclado;
   final bool? readOnly;
   final Function()? funcao;
+  final bool? esconder;
   final String? Function(String?)? validador;
   const CustomTextForm({
-    required this.controller, required this.texto, this.teclado, this.readOnly, this.funcao, this.validador, super.key
+    required this.controller, required this.texto, this.teclado, this.readOnly, this.funcao, this.esconder, this.validador, super.key
   });
 
   @override
@@ -27,6 +28,7 @@ class _CustomTextFormState extends State<CustomTextForm> {
       validator: widget.validador,
       readOnly: widget.readOnly ?? false,
       onTap: widget.funcao,
+      obscureText: widget.esconder ?? false,
     );
   }
 }

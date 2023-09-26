@@ -4,6 +4,9 @@ class ApplicationConstants {
   static const String incluir = 'Incluir';
   static const String aviso = 'Aviso!';
   static const String ok = 'OK';
+  static const String sim = 'Sim';
+  static const String nao = 'Não';
+  static const String trocarUsuario = 'Deseja trocar de usuário?';
 }
 
 class LoginConstants {
