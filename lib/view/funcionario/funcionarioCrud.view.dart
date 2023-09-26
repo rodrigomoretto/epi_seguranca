@@ -80,10 +80,7 @@ class _FuncionarioCrudViewState extends State<FuncionarioCrudView> {
                     },
                     child: const Text(
                       ApplicationConstants.incluir,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24),
+                      style: TextStyle(color: Colors.white,),
                     )),
               ),
             ],

@@ -39,6 +39,11 @@ final ThemeData defaultTheme =  ThemeData(
           width: 2,
         )
       )),
+      textStyle: MaterialStateProperty.all(const TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 24,
+      ))
     ),
   ),
 );

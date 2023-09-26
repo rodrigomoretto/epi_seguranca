@@ -99,11 +99,7 @@ class _EpiCrudViewState extends State<EpiCrudView> {
                   },
                   child: const Text(
                     ApplicationConstants.incluir,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24
-                    ),
+                    style: TextStyle(color: Colors.white,),
                   )
                 ),
               ),
