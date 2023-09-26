@@ -2,7 +2,7 @@ import 'package:epi_seguranca/database/database_service.dart';
 import 'package:epi_seguranca/model/usuario.model.dart';
 import 'package:sqflite/sqflite.dart';
 
-class EpiController {
+class UsuarioController {
   final DatabaseService _dataBaseService = DatabaseService();
 
   final _table = 'usuario';
@@ -50,6 +50,18 @@ class EpiController {
     final usuario = await database.rawQuery('SELECT * FROM $_table WHERE id = ?', [id]);
 
     return Usuario.fromSqfliteDatabase(usuario.first);
+  }
+
+  Future<Usuario?> fetchByUsernameUsuario(String username) async {
+    final database = await _dataBaseService.database;
+    final usuario = await database.rawQuery('SELECT * FROM $_table WHERE username = ?', [username]);
+
+    if (usuario.length > 0) {
+      return Usuario.fromSqfliteDatabase(usuario.first);
+    }
+    else {
+      return null;
+    }
   }
 
   Future<int> updateUsuario({

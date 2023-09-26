@@ -39,11 +39,11 @@ class SegurancaDB {
 
   Future<void> createTableUsuario(Database database) async {
     await database.execute(
-      'CREATE TABLE IF NOT EXISTS $tableEpi ('
+      'CREATE TABLE IF NOT EXISTS $tableUsuario ('
         'id INTEGER PRIMARY KEY AUTOINCREMENT, '
         'nome TEXT NOT NULL, '
         'username TEXT NOT NULL, '
-        'senha TEXT NOT NULL, '
+        'senha TEXT NOT NULL'
       ');'
     );
 

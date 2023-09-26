@@ -1,6 +1,6 @@
 import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/theme/theme.dart';
-import 'package:epi_seguranca/view/home.view.dart';
+import 'package:epi_seguranca/view/login.view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: ApplicationConstants.appName,
       theme: defaultTheme,
-      home: const HomeView(),
+      home: const LoginView(),
       debugShowCheckedModeBanner: false,
     );
   }

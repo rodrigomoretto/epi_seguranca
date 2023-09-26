@@ -2,6 +2,17 @@ class ApplicationConstants {
   static const String appName = 'Segurança do Trabalho';
   static const String bemVindo = 'Bem Vindo';
   static const String incluir = 'Incluir';
+  static const String aviso = 'Aviso!';
+  static const String ok = 'OK';
+}
+
+class LoginConstants {
+  static const String nomeUsuario = 'Nome de Usuário';
+  static const String nomeUsuarioValidacao = 'Digite o nome de Usuário';
+  static const String senha = 'Senha';
+  static const String senhaValidacao = 'Digite a Senha';
+  static const String login = 'Login';
+  static const String usuarioSenhaInvalido = 'Usuário ou Senha inválidos';
 }
 
 class HomeConstants {
