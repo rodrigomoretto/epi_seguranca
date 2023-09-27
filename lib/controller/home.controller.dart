@@ -1,8 +1,8 @@
 import 'package:epi_seguranca/view/epi/epiCrud.view.dart';
-import 'package:epi_seguranca/view/epi/epiList.view.dart';
 import 'package:epi_seguranca/view/funcionario/funcionarioCrud.view.dart';
 import 'package:epi_seguranca/view/funcionario/funcionarioList.view.dart';
 import 'package:epi_seguranca/view/login.view.dart';
+import 'package:epi_seguranca/view/relatorio/relatorio.view.dart';
 import 'package:flutter/material.dart';
 
 class HomeController {
@@ -23,7 +23,7 @@ class HomeController {
 
   static void goToRelatorios(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const EpiListView()));
+        context, MaterialPageRoute(builder: (context) => const RelatorioView()));
   }
 
   static void goToLogin(BuildContext context) {

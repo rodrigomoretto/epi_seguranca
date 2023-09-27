@@ -55,3 +55,15 @@ class EpiConstants {
   static const String cadastro = 'Cadastrado em';
   static const String semEpis = 'Sem EPIs cadastrados';
 }
+
+class AtribuiDevolveEpiConstants {
+  static const String atribuicaoEpi = 'Atribuição de EPI';
+  static const String atribuirEpi = 'Atribuir EPI';
+  static const String devolucaoEpi = 'Devolução EPI';
+}
+
+class RelatorioConstants {
+  static const String relatorios = 'Relatórios';
+  static const String funcionariosCadastrados = 'Funcionários Cadastrados';
+  static const String episCadastrados = 'EPIs Cadastrados';
+}

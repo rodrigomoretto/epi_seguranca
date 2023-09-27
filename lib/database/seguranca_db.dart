@@ -141,7 +141,7 @@ class SegurancaDB {
         'id_tipoMov INTEGER NOT NULL, '
         'dataMovimento TEXT NOT NULL, '
         'quantidade INT NOT NULL,'
-        'obs_motivo TEXT NOT NULL, '
+        'obs_motivo TEXT, '
         'FOREIGN KEY (id_funcionario) REFERENCES $tableFuncionario (id) ON DELETE NO ACTION ON UPDATE NO ACTION,'
         'FOREIGN KEY (id_epi) REFERENCES $tableEpi (id) ON DELETE NO ACTION ON UPDATE NO ACTION,'
         'FOREIGN KEY (id_tipoMov) REFERENCES $tableTipoMovimento (id) ON DELETE NO ACTION ON UPDATE NO ACTION'
