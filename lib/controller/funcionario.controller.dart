@@ -27,7 +27,7 @@ class FuncionarioController {
     final database = await _dataBaseService.database;
 
     return await database.rawInsert(
-      'INSERT INTO $table (nome, departamento, cargo, observacao, cadastro) VALUES (?, ?, ?, ?, ?, ?)',
+      'INSERT INTO $table (nome, departamento, cargo, observacao, cadastro) VALUES (?, ?, ?, ?, ?)',
       [
         nome,
         departamento,
