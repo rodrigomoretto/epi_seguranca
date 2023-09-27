@@ -1,5 +1,6 @@
 import 'package:epi_seguranca/controller/login.controller.dart';
 import 'package:epi_seguranca/util/constants/string.constants.dart';
+import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
 import 'package:epi_seguranca/util/widgets/customTextForm.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
 import 'package:flutter/material.dart';
@@ -50,42 +51,37 @@ class _LoginViewState extends State<LoginView> {
                 ),
               ],
             ),
-            Container(
-              margin: const EdgeInsets.all(16),
-              child: ElevatedButton(
-                  onPressed: () async {
-                    if (_formkey.currentState!.validate()) {
-                      _formkey.currentState!.save();
-                      final resultado = await LoginController().verificaLogin(
-                        _usernameController.text, _senhaController.text
-                      );
-                      if (resultado == null) {
-                        if (!context.mounted) return;
-                        showAdaptiveDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog.adaptive(
-                            title: const Text(ApplicationConstants.aviso),
-                            content: const Text(LoginConstants.usuarioSenhaInvalido),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text(ApplicationConstants.ok),
-                              )
-                            ],
-                          ),
-                        );
-                        _usernameController.clear();
-                        _senhaController.clear();
-                      } else {
-                        if (!context.mounted) return;
-                        LoginController.goToHome(context, resultado.nome);
-                      }
-                    }
-                  },
-                  child: const Text(
-                    LoginConstants.login,
-                    style: TextStyle(color: Colors.white,),
-                  )),
+            CustomButton(
+              texto: LoginConstants.login,
+              funcao: () async {
+                if (_formkey.currentState!.validate()) {
+                  _formkey.currentState!.save();
+                  final resultado = await LoginController().verificaLogin(
+                    _usernameController.text, _senhaController.text
+                  );
+                  if (resultado == null) {
+                    if (!context.mounted) return;
+                    showAdaptiveDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog.adaptive(
+                        title: const Text(ApplicationConstants.aviso),
+                        content: const Text(LoginConstants.usuarioSenhaInvalido),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text(ApplicationConstants.ok),
+                          )
+                        ],
+                      ),
+                    );
+                    _usernameController.clear();
+                    _senhaController.clear();
+                  } else {
+                    if (!context.mounted) return;
+                    LoginController.goToHome(context, resultado.nome);
+                  }
+                }
+              },
             ),
           ],
         ),

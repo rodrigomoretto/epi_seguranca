@@ -1,6 +1,7 @@
 import 'package:epi_seguranca/controller/epi.controller.dart';
 import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
+import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
 import 'package:epi_seguranca/util/widgets/customTextForm.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
 import 'package:flutter/material.dart';
@@ -81,27 +82,21 @@ class _EpiCrudViewState extends State<EpiCrudView> {
                   ],
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.all(16),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (_formkey.currentState!.validate()) {
-                      _formkey.currentState!.save();
-                      await EpiController().createEpi(
-                        codigo: _codigoController.text,
-                        descricao: _descricaoController.text,
-                        estoque: int.parse(_estoqueController.text),
-                        dataValidade: _dataValidade,
-                      );
-                      if (!context.mounted) return;
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  child: const Text(
-                    ApplicationConstants.incluir,
-                    style: TextStyle(color: Colors.white,),
-                  )
-                ),
+              CustomButton(
+                texto: ApplicationConstants.incluir,
+                funcao: () async {
+                  if (_formkey.currentState!.validate()) {
+                    _formkey.currentState!.save();
+                    await EpiController().createEpi(
+                      codigo: _codigoController.text,
+                      descricao: _descricaoController.text,
+                      estoque: int.parse(_estoqueController.text),
+                      dataValidade: _dataValidade,
+                    );
+                    if (!context.mounted) return;
+                    Navigator.of(context).pop();
+                  }
+                },
               ),
             ],
           ),
