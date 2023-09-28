@@ -23,4 +23,13 @@ class Epi {
     dataValidade: DateTime.parse(map['dataValidade']),
     cadastro: DateTime.parse(map['cadastro']),
   );
+
+  factory Epi.initialValues() => Epi(
+    id: 0,
+    codigo: '',
+    descricao: '',
+    estoque: 0,
+    dataValidade: DateTime.now(),
+    cadastro: DateTime.now()
+  );
 }

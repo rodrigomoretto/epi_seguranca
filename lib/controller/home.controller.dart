@@ -1,4 +1,4 @@
-import 'package:epi_seguranca/view/atribuicao/atribuiDevolveEpi.view.dart';
+import 'package:epi_seguranca/view/movimento/movimentoEpi.view.dart';
 import 'package:epi_seguranca/view/epi/epiCrud.view.dart';
 import 'package:epi_seguranca/view/funcionario/funcionarioCrud.view.dart';
 import 'package:epi_seguranca/view/login.view.dart';
@@ -18,7 +18,7 @@ class HomeController {
 
   static void goToAtribuirEPI(BuildContext context) {
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const AtribuiDevolveEpiView()));
+        MaterialPageRoute(builder: (context) => const MovimentoEpiView()));
   }
 
   static void goToRelatorios(BuildContext context) {

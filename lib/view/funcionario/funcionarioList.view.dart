@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class FuncionarioListView extends StatefulWidget {
-  const FuncionarioListView({super.key});
+  final bool selecao;
+  const FuncionarioListView({this.selecao = false, super.key});
 
   @override
   State<FuncionarioListView> createState() => _FuncionarioListViewState();
@@ -78,15 +79,22 @@ class _FuncionarioListViewState extends State<FuncionarioListView> {
 
   Widget _item(Funcionario funcionario) {
     final data = DateFormat.yMd().format(funcionario.cadastro!);
-    return CustomListItem(layout: [
-      CLayoutItem(
-          label: '${FuncionarioConstants.nome}: ', data: funcionario.nome),
-      CLayoutItem(
-          label: '${FuncionarioConstants.cargo}: ', data: funcionario.cargo),
-      CLayoutItem(
-          label: '${FuncionarioConstants.departamento} :',
-          data: funcionario.departamento),
-      CLayoutItem(label: '${FuncionarioConstants.cadastro}: ', data: data),
-    ]);
+    return InkWell(
+      onTap: () {
+        if (widget.selecao) {
+          Navigator.pop(context, funcionario);
+        }
+      },
+      child: CustomListItem(layout: [
+        CLayoutItem(
+            label: '${FuncionarioConstants.nome}: ', data: funcionario.nome),
+        CLayoutItem(
+            label: '${FuncionarioConstants.cargo}: ', data: funcionario.cargo),
+        CLayoutItem(
+            label: '${FuncionarioConstants.departamento} :',
+            data: funcionario.departamento),
+        CLayoutItem(label: '${FuncionarioConstants.cadastro}: ', data: data),
+      ]),
+    );
   }
 }

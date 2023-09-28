@@ -38,6 +38,8 @@ class FuncionarioConstants {
   static const String observacao = 'Observação';
   static const String cadastro = 'Cadastrado em';
   static const String semFuncionarios = 'Sem Funcionários cadastrados';
+  static const String episAtribuidos = 'EPIs atribuídos';
+  static const String semEpisAtribuidos = 'Sem EPIs atribuídos';
 }
 
 class EpiConstants {
@@ -56,10 +58,21 @@ class EpiConstants {
   static const String semEpis = 'Sem EPIs cadastrados';
 }
 
-class AtribuiDevolveEpiConstants {
+class MovimentoEpiConstants {
   static const String atribuicaoEpi = 'Atribuição de EPI';
   static const String atribuirEpi = 'Atribuir EPI';
   static const String devolucaoEpi = 'Devolução EPI';
+}
+
+class AtribuiEpiConstants {
+  static const String atribuirEpi = 'Atribuir EPI';
+  static const String codigoEpi = 'Código EPI';
+  static const String descricao = 'Descrição';
+  static const String quantidadeEstoque = 'Quantidade em estoque';
+  static const String funcionario = 'Funcionário';
+  static const String nome = 'Nome';
+  static const String departamento = 'Departamento';
+  static const String quantidadeAtribuir = 'Quantidade a atribuir';
 }
 
 class RelatorioConstants {

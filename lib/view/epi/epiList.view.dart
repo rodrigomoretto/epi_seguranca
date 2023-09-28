@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EpiListView extends StatefulWidget {
-  const EpiListView({super.key});
+  final bool selecao;
+  const EpiListView({this.selecao = false, super.key});
 
   @override
   State<EpiListView> createState() => _EpiListViewState();
@@ -77,13 +78,20 @@ class _EpiListViewState extends State<EpiListView> {
   Widget _item(Epi epi) {
     final dataCadastro = DateFormat.yMd().format(epi.cadastro!);
     final dataValidade = DateFormat.yMd().format(epi.dataValidade);
-    return CustomListItem(layout: [
-      CLayoutItem(label: '${EpiConstants.codigo}: ', data: epi.codigo),
-      CLayoutItem(label: '${EpiConstants.descricao}: ', data: epi.descricao),
-      CLayoutItem(
-          label: '${EpiConstants.quantidade} :', data: epi.estoque.toString()),
-      CLayoutItem(label: '${EpiConstants.dataValidade}: ', data: dataValidade),
-      CLayoutItem(label: '${EpiConstants.cadastro}: ', data: dataCadastro),
-    ]);
+    return InkWell(
+      onTap: () {
+        if (widget.selecao) {
+          Navigator.pop(context, epi);
+        }
+      },
+      child: CustomListItem(layout: [
+        CLayoutItem(label: '${EpiConstants.codigo}: ', data: epi.codigo),
+        CLayoutItem(label: '${EpiConstants.descricao}: ', data: epi.descricao),
+        CLayoutItem(
+            label: '${EpiConstants.quantidade} :', data: epi.estoque.toString()),
+        CLayoutItem(label: '${EpiConstants.dataValidade}: ', data: dataValidade),
+        CLayoutItem(label: '${EpiConstants.cadastro}: ', data: dataCadastro),
+      ]),
+    );
   }
 }

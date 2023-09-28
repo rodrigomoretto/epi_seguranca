@@ -76,7 +76,7 @@ class SegurancaDB {
 
   Future<void> createTableTipoMovimento(Database database) async {
     await database.execute(
-      'CREATE TABLE IF NOT EXISTS $tableEpi ('
+      'CREATE TABLE IF NOT EXISTS $tableTipoMovimento ('
         'id INTEGER PRIMARY KEY, '
         'codigo TEXT NOT NULL, '
         'tipo INTEGER NOT NULL, '
@@ -88,7 +88,7 @@ class SegurancaDB {
     // Tipo 2 -> Descarte (Não há entrada)
 
     await database.insert(
-      tableUsuario,
+      tableTipoMovimento,
       {
         'id': 0,
         'codigo': 'EI',
@@ -99,7 +99,7 @@ class SegurancaDB {
     );
 
     await database.insert(
-      tableUsuario,
+      tableTipoMovimento,
       {
         'id': 1,
         'codigo': 'SA',
@@ -110,7 +110,7 @@ class SegurancaDB {
     );
 
     await database.insert(
-      tableUsuario,
+      tableTipoMovimento,
       {
         'id': 2,
         'codigo': 'ED',
@@ -121,12 +121,12 @@ class SegurancaDB {
     );
 
     await database.insert(
-      tableUsuario,
+      tableTipoMovimento,
       {
         'id': 3,
         'codigo': 'DE',
         'tipo': 2,
-        'descricao': 'Entrada por descarte',
+        'descricao': 'Entrada para descarte',
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -140,7 +140,7 @@ class SegurancaDB {
         'id_epi INTEGER NOT NULL, '
         'id_tipoMov INTEGER NOT NULL, '
         'dataMovimento TEXT NOT NULL, '
-        'quantidade INT NOT NULL,'
+        'quantidade INTEGER NOT NULL,'
         'obs_motivo TEXT, '
         'FOREIGN KEY (id_funcionario) REFERENCES $tableFuncionario (id) ON DELETE NO ACTION ON UPDATE NO ACTION,'
         'FOREIGN KEY (id_epi) REFERENCES $tableEpi (id) ON DELETE NO ACTION ON UPDATE NO ACTION,'

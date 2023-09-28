@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomCard extends StatefulWidget {
+class CustomCard extends StatelessWidget {
   final String texto;
   final IconData icone;
   final Function()? funcao;
@@ -8,16 +8,11 @@ class CustomCard extends StatefulWidget {
   const CustomCard({required this.texto, required this.icone, this.funcao, super.key});
 
   @override
-  State<CustomCard> createState() => _CustomCardState();
-}
-
-class _CustomCardState extends State<CustomCard> {
-  @override
   Widget build(BuildContext context) {
     BorderRadius border = const BorderRadius.all(Radius.circular(10));
     return InkWell(
       borderRadius: border,
-      onTap: widget.funcao,
+      onTap: funcao,
       child: Card(
         child: SizedBox(
           height: MediaQuery.sizeOf(context).width > 450
@@ -31,11 +26,11 @@ class _CustomCardState extends State<CustomCard> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(
-                widget.icone,
+                icone,
                 size: 100,
               ),
               Text(
-                widget.texto,
+                texto,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold
                 ),

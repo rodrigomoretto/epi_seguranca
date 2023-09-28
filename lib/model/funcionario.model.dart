@@ -23,4 +23,13 @@ class Funcionario {
     observacao: map['observacao'] ?? '',
     cadastro: DateTime.parse(map['cadastro']),
   );
+
+  factory Funcionario.initialValues() => Funcionario(
+    id: 0,
+    nome: '',
+    departamento: '',
+    cargo: '',
+    observacao: '',
+    cadastro: DateTime.now(),
+  );
 }
