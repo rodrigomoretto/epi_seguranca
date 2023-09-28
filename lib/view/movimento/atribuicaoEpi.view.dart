@@ -220,7 +220,7 @@ class _AtribuicaoEpiViewState extends State<AtribuicaoEpiView> {
                       idFuncMov: _funcionario.id,
                       idEpiMov: _epi.id,
                       idTipoMovMov: _idTipoMovimento,
-                      quantidadeMov: _quantidade
+                      quantidadeMov: _quantidade,
                     );
                     await AtribuicaoController().createMovimento(
                       movimento: _movimento,
