@@ -1,4 +1,5 @@
 import 'package:epi_seguranca/controller/funcionario.controller.dart';
+import 'package:epi_seguranca/model/epi.model.dart';
 import 'package:epi_seguranca/model/funcionario.model.dart';
 import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
@@ -78,23 +79,35 @@ class _FuncionarioListViewState extends State<FuncionarioListView> {
   }
 
   Widget _item(Funcionario funcionario) {
-    final data = DateFormat.yMd().format(funcionario.cadastro!);
+    final List<CLayoutItem> lista = _criaLista(funcionario);
     return InkWell(
       onTap: () {
         if (widget.selecao) {
           Navigator.pop(context, funcionario);
         }
       },
-      child: CustomListItem(layout: [
-        CLayoutItem(
-            label: '${FuncionarioConstants.nome}: ', data: funcionario.nome),
-        CLayoutItem(
-            label: '${FuncionarioConstants.cargo}: ', data: funcionario.cargo),
-        CLayoutItem(
-            label: '${FuncionarioConstants.departamento} :',
-            data: funcionario.departamento),
-        CLayoutItem(label: '${FuncionarioConstants.cadastro}: ', data: data),
-      ]),
+      child: CustomListItem(layout: lista),
     );
+  }
+
+  List<CLayoutItem> _criaLista(Funcionario func) {
+    final data = DateFormat.yMd().format(func.cadastro!);
+    List<CLayoutItem> listaPersonalizada = List.empty(growable: true);
+
+    listaPersonalizada.add(CLayoutItem(label: '${FuncionarioConstants.nome}: ', data: func.nome),);
+    listaPersonalizada.add(CLayoutItem(label: '${FuncionarioConstants.cargo}: ', data: func.cargo),);
+    listaPersonalizada.add(CLayoutItem(label: '${FuncionarioConstants.nome}: ', data: func.departamento),);
+    listaPersonalizada.add(CLayoutItem(label: '${FuncionarioConstants.nome}: ', data: data),);
+
+    if (func.episAtribuidos != null) {
+      listaPersonalizada.add(CLayoutItem(label: '${FuncionarioConstants.episAtribuidos}: ', data: ''),);
+
+      for (Epi epi in func.episAtribuidos!) {
+        listaPersonalizada.add(CLayoutItem(label: '${EpiConstants.codigo}: ', data: epi.codigo),);
+        listaPersonalizada.add(CLayoutItem(label: '${EpiConstants.descricao}: ', data: epi.descricao),);
+      }
+    }
+
+    return listaPersonalizada;
   }
 }

@@ -87,8 +87,7 @@ class _EpiListViewState extends State<EpiListView> {
       child: CustomListItem(layout: [
         CLayoutItem(label: '${EpiConstants.codigo}: ', data: epi.codigo),
         CLayoutItem(label: '${EpiConstants.descricao}: ', data: epi.descricao),
-        CLayoutItem(
-            label: '${EpiConstants.quantidade} :', data: epi.estoque.toString()),
+        CLayoutItem(label: '${EpiConstants.quantidade} :', data: epi.estoque.toString()),
         CLayoutItem(label: '${EpiConstants.dataValidade}: ', data: dataValidade),
         CLayoutItem(label: '${EpiConstants.cadastro}: ', data: dataCadastro),
       ]),

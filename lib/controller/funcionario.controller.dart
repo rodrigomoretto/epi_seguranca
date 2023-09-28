@@ -1,5 +1,9 @@
+import 'package:epi_seguranca/controller/epi.controller.dart';
+import 'package:epi_seguranca/controller/movimento/atribuicaoEpi.controller.dart';
 import 'package:epi_seguranca/database/database_service.dart';
+import 'package:epi_seguranca/model/epi.model.dart';
 import 'package:epi_seguranca/model/funcionario.model.dart';
+import 'package:epi_seguranca/model/movimento.model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FuncionarioController {
@@ -43,9 +47,26 @@ class FuncionarioController {
     final database = await _dataBaseService.database;
     final funcionarios = await database.rawQuery('SELECT * FROM $table');
 
-    return funcionarios
+    final List<Funcionario> listaFuncionarios = funcionarios
         .map((funcionario) => Funcionario.fromSqfliteDatabase(funcionario))
         .toList();
+    
+    for (Funcionario func in listaFuncionarios) {
+      final movimentosFuncionario = await AtribuicaoController().fetchAllMovimentoFuncionario(func.id);
+
+      if (movimentosFuncionario.isNotEmpty) {
+        func.episAtribuidos = List<Epi>.empty(growable: true);
+
+        for (Movimento movimento in movimentosFuncionario) {
+          final Epi epi = await EpiController().fetchByIdEpi(movimento.idEpi);
+
+          func.episAtribuidos?.add(epi);
+        }
+      }
+      
+    }
+
+    return listaFuncionarios;
   }
 
   Future<Funcionario> fetchByIdFuncionario(int id) async {
