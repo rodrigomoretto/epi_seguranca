@@ -96,8 +96,8 @@ class _FuncionarioListViewState extends State<FuncionarioListView> {
 
     listaPersonalizada.add(CLayoutItem(label: '${FuncionarioConstants.nome}: ', data: func.nome),);
     listaPersonalizada.add(CLayoutItem(label: '${FuncionarioConstants.cargo}: ', data: func.cargo),);
-    listaPersonalizada.add(CLayoutItem(label: '${FuncionarioConstants.nome}: ', data: func.departamento),);
-    listaPersonalizada.add(CLayoutItem(label: '${FuncionarioConstants.nome}: ', data: data),);
+    listaPersonalizada.add(CLayoutItem(label: '${FuncionarioConstants.departamento}: ', data: func.departamento),);
+    listaPersonalizada.add(CLayoutItem(label: '${FuncionarioConstants.cadastro}: ', data: data),);
 
     if (func.episAtribuidos != null) {
       listaPersonalizada.add(CLayoutItem(label: '${FuncionarioConstants.episAtribuidos}: ', data: ''),);
@@ -105,6 +105,9 @@ class _FuncionarioListViewState extends State<FuncionarioListView> {
       for (Epi epi in func.episAtribuidos!) {
         listaPersonalizada.add(CLayoutItem(label: '${EpiConstants.codigo}: ', data: epi.codigo),);
         listaPersonalizada.add(CLayoutItem(label: '${EpiConstants.descricao}: ', data: epi.descricao),);
+        if (func.episAtribuidos?.last != epi){
+          listaPersonalizada.add(CLayoutItem(label: '---------------------------', data: ''),);
+        }
       }
     }
 
