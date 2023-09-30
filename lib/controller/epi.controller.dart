@@ -1,5 +1,6 @@
 import 'package:epi_seguranca/database/database_service.dart';
 import 'package:epi_seguranca/model/epi.model.dart';
+import 'package:epi_seguranca/model/funcionario.model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class EpiController {
@@ -40,6 +41,19 @@ class EpiController {
   }
 
   Future<List<Epi>> fetchAllEpi() async {
+    final database = await _dataBaseService.database;
+    final epis = await database.rawQuery('SELECT * FROM $_table');
+
+    return epis.map((epi) => Epi.fromSqfliteDatabase(epi)).toList();
+  }
+
+  Future<List<Epi>> fetchAllEpiFuncionario(Funcionario funcionario) async {
+    final List<int> idsEpis = List.empty(growable: true);
+
+    for (Epi epi in funcionario.episAtribuidos!) {
+      idsEpis.add(epi.id);
+    }
+
     final database = await _dataBaseService.database;
     final epis = await database.rawQuery('SELECT * FROM $_table');
 

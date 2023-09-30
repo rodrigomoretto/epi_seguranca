@@ -28,7 +28,7 @@ class MovimentoEpiView extends StatelessWidget {
                         texto: MovimentoEpiConstants.atribuirEpi,
                       ),
                       CustomButton(
-                        funcao: () {},
+                        funcao: () => MovimentoEpiController.goToDevolverEPI(context),
                         texto: MovimentoEpiConstants.devolucaoEpi,
                       ),
                     ],

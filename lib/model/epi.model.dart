@@ -5,6 +5,7 @@ class Epi {
   final int estoque;
   final DateTime dataValidade;
   final DateTime? cadastro;
+  int qtdFunc;
 
   Epi({
     required this.id,
@@ -12,7 +13,8 @@ class Epi {
     required this.descricao,
     required this.estoque,
     required this.dataValidade,
-    this.cadastro
+    this.cadastro,
+    this.qtdFunc = 0,
   });
 
   factory Epi.fromSqfliteDatabase(Map<String, dynamic> map) => Epi(

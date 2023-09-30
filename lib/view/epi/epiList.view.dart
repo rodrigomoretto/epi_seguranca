@@ -1,5 +1,7 @@
 import 'package:epi_seguranca/controller/epi.controller.dart';
+import 'package:epi_seguranca/controller/movimento/movimentoEpi.controller.dart';
 import 'package:epi_seguranca/model/epi.model.dart';
+import 'package:epi_seguranca/model/funcionario.model.dart';
 import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customListItem.widget.dart';
@@ -9,7 +11,8 @@ import 'package:intl/intl.dart';
 
 class EpiListView extends StatefulWidget {
   final bool selecao;
-  const EpiListView({this.selecao = false, super.key});
+  final Funcionario? funcionario;
+  const EpiListView({this.selecao = false, this.funcionario, super.key});
 
   @override
   State<EpiListView> createState() => _EpiListViewState();
@@ -21,7 +24,7 @@ class _EpiListViewState extends State<EpiListView> {
     return Scaffold(
       appBar: customAppBar,
       body: FutureBuilder<List<Epi>>(
-        future: EpiController().fetchAllEpi(),
+        future: _busca(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -75,6 +78,15 @@ class _EpiListViewState extends State<EpiListView> {
     );
   }
 
+  Future<List<Epi>> _busca() async {
+    if(widget.funcionario != null) {
+      return await MovimentoEpiController().fetchAllEpiFuncionario(widget.funcionario!);
+    }
+    else {
+      return await EpiController().fetchAllEpi();
+    }
+  }
+
   Widget _item(Epi epi) {
     final dataCadastro = DateFormat.yMd().format(epi.cadastro!);
     final dataValidade = DateFormat.yMd().format(epi.dataValidade);
@@ -87,7 +99,9 @@ class _EpiListViewState extends State<EpiListView> {
       child: CustomListItem(layout: [
         CLayoutItem(label: '${EpiConstants.codigo}: ', data: epi.codigo),
         CLayoutItem(label: '${EpiConstants.descricao}: ', data: epi.descricao),
-        CLayoutItem(label: '${EpiConstants.quantidade} :', data: epi.estoque.toString()),
+        widget.funcionario != null
+          ? CLayoutItem(label: '${EpiConstants.quantidade} :', data: epi.qtdFunc.toString())
+          : CLayoutItem(label: '${EpiConstants.quantidade} :', data: epi.estoque.toString()),
         CLayoutItem(label: '${EpiConstants.dataValidade}: ', data: dataValidade),
         CLayoutItem(label: '${EpiConstants.cadastro}: ', data: dataCadastro),
       ]),

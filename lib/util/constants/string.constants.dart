@@ -75,6 +75,19 @@ class AtribuiEpiConstants {
   static const String quantidadeAtribuir = 'Quantidade a atribuir';
 }
 
+class DevolveEpiConstants {
+  static const String devolucaoEpi = 'Devolução EPI';
+  static const String funcionario = 'Funcionário';
+  static const String nome = 'Nome';
+  static const String departamento = 'Departamento';
+  static const String epiDevolvido = 'EPI Devolvido';
+  static const String descricao = 'Descrição';
+  static const String quantidadeDevolver = 'Quantidade a devolver';
+  static const String quantidadeComFuncionario = 'Quantidade com Funcionário';
+  static const String descarte = 'Descarte?';
+  static const String motivo = 'Motivo';
+}
+
 class RelatorioConstants {
   static const String relatorios = 'Relatórios';
   static const String funcionariosCadastrados = 'Funcionários Cadastrados';

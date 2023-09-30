@@ -1,4 +1,3 @@
-import 'package:epi_seguranca/controller/movimento/atribuicaoEpi.controller.dart';
 import 'package:epi_seguranca/controller/movimento/movimentoEpi.controller.dart';
 import 'package:epi_seguranca/model/epi.model.dart';
 import 'package:epi_seguranca/model/funcionario.model.dart';
@@ -222,7 +221,7 @@ class _AtribuicaoEpiViewState extends State<AtribuicaoEpiView> {
                       idTipoMovMov: _idTipoMovimento,
                       quantidadeMov: _quantidade,
                     );
-                    await AtribuicaoController().createMovimento(
+                    await MovimentoEpiController().createMovimento(
                       movimento: _movimento,
                       epi: _epi
                     );

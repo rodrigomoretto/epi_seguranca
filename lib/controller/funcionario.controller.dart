@@ -1,9 +1,10 @@
 import 'package:epi_seguranca/controller/epi.controller.dart';
-import 'package:epi_seguranca/controller/movimento/atribuicaoEpi.controller.dart';
+import 'package:epi_seguranca/controller/movimento/movimentoEpi.controller.dart';
 import 'package:epi_seguranca/database/database_service.dart';
 import 'package:epi_seguranca/model/epi.model.dart';
 import 'package:epi_seguranca/model/funcionario.model.dart';
 import 'package:epi_seguranca/model/movimento.model.dart';
+import 'package:epi_seguranca/util/constants/app.constants.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FuncionarioController {
@@ -51,17 +52,58 @@ class FuncionarioController {
         .map((funcionario) => Funcionario.fromSqfliteDatabase(funcionario))
         .toList();
     
+    // Verifica movimentos de cada Funcionário
     for (Funcionario func in listaFuncionarios) {
-      final movimentosFuncionario = await AtribuicaoController().fetchAllMovimentoFuncionario(func.id);
+      final movimentosFuncionario = await MovimentoEpiController().fetchAllMovimentoFuncionario(func.id);
 
       if (movimentosFuncionario.isNotEmpty) {
         func.episAtribuidos = List<Epi>.empty(growable: true);
 
+        // Preenche lista de ids de EPIs
+        List<int> listaIdsEpis = List.empty(growable: true);
         for (Movimento movimento in movimentosFuncionario) {
-          final Epi epi = await EpiController().fetchByIdEpi(movimento.idEpi);
-
-          func.episAtribuidos?.add(epi);
+          if (!listaIdsEpis.contains(movimento.idEpi)) {
+            listaIdsEpis.add(movimento.idEpi);
+          }
         }
+
+        List<Epi> listaEpis = List.empty(growable: true);
+        for (int idEpi in listaIdsEpis) {
+          final Epi epi = await EpiController().fetchByIdEpi(idEpi);
+          listaEpis.add(epi);
+        }
+
+        for (Movimento movimento in movimentosFuncionario) {
+          // for (var element in func.episAtribuidos!) {
+          for (Epi epi in listaEpis) {
+            if (epi.id == movimento.idEpi) {
+              switch (movimento.idTipoMov) {
+                case CodigoMovimentoConstants.saidaAtribuicao:
+                  // epi.qtdFunc = epi.qtdFunc + movimento.quantidade;
+                  epi.qtdFunc += movimento.quantidade;
+                  break;
+                case CodigoMovimentoConstants.entradaDevolucao:
+                  // epi.qtdFunc = epi.qtdFunc - movimento.quantidade;
+                  epi.qtdFunc -= movimento.quantidade;
+                  break;
+                case CodigoMovimentoConstants.entradaDescarte:
+                  // epi.qtdFunc = epi.qtdFunc - movimento.quantidade;
+                  epi.qtdFunc -= movimento.quantidade;
+                  break;
+                default:
+              }
+            }
+          }
+        }
+
+        // Remove EPIs que estão com quantidade menor ou igual a zero atribuída ao funcionário
+        for (var epi in func.episAtribuidos!) {
+          if (epi.qtdFunc <= 0) {
+            func.episAtribuidos!.remove(epi);
+          }
+        }
+
+        func.episAtribuidos = listaEpis;
       }
       
     }

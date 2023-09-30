@@ -105,6 +105,7 @@ class _FuncionarioListViewState extends State<FuncionarioListView> {
       for (Epi epi in func.episAtribuidos!) {
         listaPersonalizada.add(CLayoutItem(label: '${EpiConstants.codigo}: ', data: epi.codigo),);
         listaPersonalizada.add(CLayoutItem(label: '${EpiConstants.descricao}: ', data: epi.descricao),);
+        listaPersonalizada.add(CLayoutItem(label: '${EpiConstants.quantidade}: ', data: epi.qtdFunc.toString()),);
         if (func.episAtribuidos?.last != epi){
           listaPersonalizada.add(CLayoutItem(label: '---------------------------', data: ''),);
         }
