@@ -1,4 +1,3 @@
-import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:flutter/material.dart';
 
 class Logo extends StatelessWidget {
