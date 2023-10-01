@@ -14,14 +14,10 @@ class Logo extends StatelessWidget {
         children: [
           Column(
             children: [
-              Icon(
-                Icons.add_circle_outline,
+              ImageIcon(
+                const AssetImage('assets/images/logo.png'),
                 size: 100,
                 color: Theme.of(context).colorScheme.primary,
-              ),
-              Text(
-                ApplicationConstants.appName.toUpperCase(),
-                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ],
           ),
