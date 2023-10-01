@@ -78,6 +78,9 @@ class _AtribuicaoEpiViewState extends State<AtribuicaoEpiView> {
                             _quantidadeController.text = _quantidade.toString();
                           }
                         },
+                        validator: (value) => value != null && value.isEmpty
+                          ? AtribuiEpiConstants.epiValidacao
+                          : null,
                       ),
                     ),
                   ],
@@ -139,6 +142,9 @@ class _AtribuicaoEpiViewState extends State<AtribuicaoEpiView> {
                             _funcionarioController.text = _funcionario.id.toString();
                           }
                         },
+                        validator: (value) => value != null && value.isEmpty
+                          ? AtribuiEpiConstants.funcionarioValidacao
+                          : null,
                       ),
                     ),
                   ],

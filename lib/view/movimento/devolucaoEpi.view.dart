@@ -80,6 +80,9 @@ class _DevolucaoEpiViewState extends State<DevolucaoEpiView> {
                               _funcionarioController.text = _funcionario.id.toString();
                             }
                           },
+                          validator: (value) => value != null && value.isEmpty
+                            ? DevolveEpiConstants.funcionarioValidacao
+                            : null,
                         ),
                       ),
                     ],
@@ -106,94 +109,103 @@ class _DevolucaoEpiViewState extends State<DevolucaoEpiView> {
                   ),
                 ),
       
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Visibility(
+                  visible: _funcionario.episAtribuidos != null,
+                  child: Column(
                     children: [
-                      const Flexible(
-                        flex: 2,
-                        child: Text(
-                          '${DevolveEpiConstants.epiDevolvido}: ',
-                          style: TextStyle(
-                            fontSize: 24
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Flexible(
+                              flex: 2,
+                              child: Text(
+                                '${DevolveEpiConstants.epiDevolvido}: ',
+                                style: TextStyle(
+                                  fontSize: 24
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              flex: 3,
+                              child: TextFormField(
+                                controller: _epiController,
+                                textAlign: TextAlign.center,
+                                readOnly: true,
+                                decoration: const InputDecoration(
+                                  suffixIcon: Icon(Icons.search),
+                                ),
+                                onTap: () async {
+                                  final List<int> idsEpis = List.empty(growable: true);
+                
+                                  for (Epi epi in _funcionario.episAtribuidos!) {
+                                    idsEpis.add(epi.id);
+                                  }
+                                  final resultado = await MovimentoEpiController.goToEpiSelecao(
+                                    context, funcionario: _funcionario
+                                  );
+                                  if (resultado != null) {
+                                    for (var epiFunc in _funcionario.episAtribuidos!) {
+                                      if (epiFunc.id == resultado.id) {
+                                        setState(() {
+                                          _quantidade = epiFunc.qtdFunc;
+                                        });
+                                        break;
+                                      }
+                                    }
+                
+                                    setState(() {
+                                      _epi = resultado;
+                                    });
+                                    _epiController.text = _epi.codigo;
+                                    _quantidadeController.text = _quantidade.toString();
+                                  }
+                                },
+                                validator: (value) => value != null && value.isEmpty
+                                  ? DevolveEpiConstants.epiDevolvidoValidacao
+                                  : null,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Flexible(
-                        flex: 3,
-                        child: TextFormField(
-                          controller: _epiController,
-                          textAlign: TextAlign.center,
-                          readOnly: true,
-                          decoration: const InputDecoration(
-                            suffixIcon: Icon(Icons.search),
-                          ),
-                          onTap: () async {
-                            final List<int> idsEpis = List.empty(growable: true);
-
-                            for (Epi epi in _funcionario.episAtribuidos!) {
-                              idsEpis.add(epi.id);
-                            }
-                            final resultado = await MovimentoEpiController.goToEpiSelecao(
-                              context, funcionario: _funcionario
-                            );
-                            if (resultado != null) {
-                              for (var epiFunc in _funcionario.episAtribuidos!) {
-                                if (epiFunc.id == resultado.id) {
-                                  setState(() {
-                                    _quantidade = epiFunc.qtdFunc;
-                                  });
-                                  break;
-                                }
-                              }
-
-                              setState(() {
-                                _epi = resultado;
-                              });
-                              _epiController.text = _epi.codigo;
-                              _quantidadeController.text = _quantidade.toString();
-                            }
-                          },
+                
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Flexible(child: Text(
+                              '${DevolveEpiConstants.descricao}: ',
+                              // style: TextStyle(fontSize: 18),
+                            )),
+                            Flexible(child: Text(_epi.descricao)),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Flexible(
+                              flex: 3,
+                              child: Text(
+                                '${DevolveEpiConstants.quantidadeComFuncionario}: ',
+                                // style: TextStyle(fontSize: 18),
+                            )),
+                            Flexible(
+                              flex: 2,
+                              child: Text(_epi.qtdFunc.toString())
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Flexible(child: Text(
-                        '${DevolveEpiConstants.descricao}: ',
-                        // style: TextStyle(fontSize: 18),
-                      )),
-                      Flexible(child: Text(_epi.descricao)),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Flexible(
-                        flex: 3,
-                        child: Text(
-                          '${DevolveEpiConstants.quantidadeComFuncionario}: ',
-                          // style: TextStyle(fontSize: 18),
-                      )),
-                      Flexible(
-                        flex: 2,
-                        child: Text(_epi.qtdFunc.toString())
-                      ),
-                    ],
-                  ),
-                ),
-                
-                
-      
+
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Row(
@@ -272,6 +284,9 @@ class _DevolucaoEpiViewState extends State<DevolucaoEpiView> {
                       border: OutlineInputBorder(borderSide: BorderSide(style: BorderStyle.solid)),
                     ),
                     maxLines: 5,
+                    validator: (value) => value != null && value.isEmpty
+                      ? DevolveEpiConstants.motivoValidacao
+                      : null,
                   ),
                 ),
       
