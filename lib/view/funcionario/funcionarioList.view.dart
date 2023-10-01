@@ -5,6 +5,7 @@ import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customListItem.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
+import 'package:epi_seguranca/util/widgets/screenCard.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -20,6 +21,7 @@ class _FuncionarioListViewState extends State<FuncionarioListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Adjust Paddings
       appBar: customAppBar,
       body: FutureBuilder<List<Funcionario>>(
         future: FuncionarioController().fetchAllFuncionario(),
@@ -37,6 +39,7 @@ class _FuncionarioListViewState extends State<FuncionarioListView> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Logo(),
+                        ScreenCard(FuncionarioConstants.funcionariosCadastrados,),
                         Center(
                           child: Text(
                             FuncionarioConstants.semFuncionarios,
@@ -60,6 +63,7 @@ class _FuncionarioListViewState extends State<FuncionarioListView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   const Logo(),
+                                  const ScreenCard(FuncionarioConstants.funcionariosCadastrados,),
                                   Column(
                                     children: [_item(funcionario)],
                                   )

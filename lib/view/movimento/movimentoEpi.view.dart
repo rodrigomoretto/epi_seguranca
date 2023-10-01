@@ -3,6 +3,7 @@ import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
+import 'package:epi_seguranca/util/widgets/screenCard.widget.dart';
 import 'package:flutter/material.dart';
 
 class MovimentoEpiView extends StatelessWidget {
@@ -12,6 +13,7 @@ class MovimentoEpiView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar,
+      // Adjust Paddings
       body: CustomScrollView(
         slivers: [
           SliverFillRemaining(
@@ -20,6 +22,10 @@ class MovimentoEpiView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 const Logo(),
+                const ScreenCard(
+                  MovimentoEpiConstants.atribuicaoEpi,
+                  icone: Icons.business,
+                ),
                 Center(
                   child: Column(
                     children: [

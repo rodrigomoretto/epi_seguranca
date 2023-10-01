@@ -4,6 +4,7 @@ import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
 import 'package:epi_seguranca/util/widgets/customTextForm.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
+import 'package:epi_seguranca/util/widgets/screenCard.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -28,6 +29,7 @@ class _EpiCrudViewState extends State<EpiCrudView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar,
+      // Adjust Paddings
       body: SingleChildScrollView(
         child: Form(
           key: _formkey,
@@ -36,6 +38,10 @@ class _EpiCrudViewState extends State<EpiCrudView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget> [
               const Logo(),
+              const ScreenCard(
+                EpiConstants.episCadastrados,
+                icone: Icons.business_center_outlined,
+              ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 23),
                 child: Column(

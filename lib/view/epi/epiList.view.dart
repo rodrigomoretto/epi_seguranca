@@ -6,6 +6,7 @@ import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customListItem.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
+import 'package:epi_seguranca/util/widgets/screenCard.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -38,6 +39,7 @@ class _EpiListViewState extends State<EpiListView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Logo(),
+                      ScreenCard(EpiConstants.episCadastrados,),
                       Center(
                         child: Text(
                           EpiConstants.semEpis,
@@ -60,6 +62,7 @@ class _EpiListViewState extends State<EpiListView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   const Logo(),
+                                  const ScreenCard(EpiConstants.episCadastrados,),
                                   Column(
                                     children: [_item(epi)],
                                   )

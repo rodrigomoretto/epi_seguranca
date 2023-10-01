@@ -7,6 +7,7 @@ import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
+import 'package:epi_seguranca/util/widgets/screenCard.widget.dart';
 import 'package:flutter/material.dart';
 
 class AtribuicaoEpiView extends StatefulWidget {
@@ -234,32 +235,6 @@ class _AtribuicaoEpiViewState extends State<AtribuicaoEpiView> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class ScreenCard extends StatelessWidget {
-  final String texto;
-  final IconData icone;
-  const ScreenCard(this.texto, {required this.icone, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          texto,
-          style: const TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Icon(
-          icone,
-          size: 50,
-        ),
-      ],
     );
   }
 }
