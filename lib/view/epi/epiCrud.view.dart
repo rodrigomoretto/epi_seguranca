@@ -4,6 +4,7 @@ import 'package:epi_seguranca/util/textForm.utils.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
 import 'package:epi_seguranca/util/widgets/customTextForm.widget.dart';
+import 'package:epi_seguranca/util/widgets/customView.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
 import 'package:epi_seguranca/util/widgets/screenCard.widget.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class _EpiCrudViewState extends State<EpiCrudView> {
     return Scaffold(
       appBar: customAppBar,
       // Adjust Paddings
-      body: SingleChildScrollView(
+      body: CustomView(
         child: Form(
           key: _formkey,
           child: Column(
@@ -43,35 +44,32 @@ class _EpiCrudViewState extends State<EpiCrudView> {
                 EpiConstants.episCadastrados,
                 icone: Icons.business_center_outlined,
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 23),
-                child: Column(
-                  children: [
-                    CustomTextForm(
-                      controller: _codigoController,
-                      texto: '${EpiConstants.codigo}:',
-                      validador: (value) => TextFormUtils().defaultValidator(value, EpiConstants.codigoValidacao),
-                    ),
-                    CustomTextForm(
-                      controller: _descricaoController,
-                      texto: '${EpiConstants.descricao}:',
-                      validador: (value) => TextFormUtils().defaultValidator(value, EpiConstants.descricaoValidacao),
-                    ),
-                    CustomTextForm(
-                      controller: _estoqueController,
-                      texto: '${EpiConstants.estoque}:',
-                      teclado: TextInputType.number,
-                      validador: (value) => TextFormUtils().defaultValidator(value, EpiConstants.estoqueValidacao),
-                    ),
-                    CustomTextForm(
-                      controller: _dataValidadeController,
-                      texto: '${EpiConstants.dataValidade}:',
-                      readOnly: true,
-                      funcao: _selecionaDataValidade,
-                      validador: (value) => TextFormUtils().defaultValidator(value, EpiConstants.dataValidadeValidacao),
-                    ),
-                  ],
-                ),
+              Column(
+                children: [
+                  CustomTextForm(
+                    controller: _codigoController,
+                    texto: '${EpiConstants.codigo}:',
+                    validador: (value) => TextFormUtils().defaultValidator(value, EpiConstants.codigoValidacao),
+                  ),
+                  CustomTextForm(
+                    controller: _descricaoController,
+                    texto: '${EpiConstants.descricao}:',
+                    validador: (value) => TextFormUtils().defaultValidator(value, EpiConstants.descricaoValidacao),
+                  ),
+                  CustomTextForm(
+                    controller: _estoqueController,
+                    texto: '${EpiConstants.estoque}:',
+                    teclado: TextInputType.number,
+                    validador: (value) => TextFormUtils().defaultValidator(value, EpiConstants.estoqueValidacao),
+                  ),
+                  CustomTextForm(
+                    controller: _dataValidadeController,
+                    texto: '${EpiConstants.dataValidade}:',
+                    readOnly: true,
+                    funcao: _selecionaDataValidade,
+                    validador: (value) => TextFormUtils().defaultValidator(value, EpiConstants.dataValidadeValidacao),
+                  ),
+                ],
               ),
               CustomButton(
                 texto: ApplicationConstants.incluir,

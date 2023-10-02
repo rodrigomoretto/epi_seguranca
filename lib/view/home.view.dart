@@ -3,6 +3,7 @@ import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/widgets/cardWrapper.widget.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customCard.widget.dart';
+import 'package:epi_seguranca/util/widgets/customView.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
 import 'package:epi_seguranca/util/widgets/userCard.widget.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar,
-      body: SingleChildScrollView(
+      body: CustomView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

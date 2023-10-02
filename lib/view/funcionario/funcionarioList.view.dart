@@ -21,63 +21,69 @@ class _FuncionarioListViewState extends State<FuncionarioListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Adjust Paddings
       appBar: customAppBar,
-      body: FutureBuilder<List<Funcionario>>(
-        future: FuncionarioController().fetchAllFuncionario(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            final List<Funcionario> funcionariosList = snapshot.data!;
-
-            return funcionariosList.isEmpty
-                ? const Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Logo(),
-                        ScreenCard(FuncionarioConstants.funcionariosCadastrados,),
-                        Center(
-                          child: Text(
-                            FuncionarioConstants.semFuncionarios,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+      body: Padding(
+        padding: const EdgeInsets.only(
+          left: 16,
+          right: 4,
+        ),
+        // padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: FutureBuilder<List<Funcionario>>(
+          future: FuncionarioController().fetchAllFuncionario(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              final List<Funcionario> funcionariosList = snapshot.data!;
+      
+              return funcionariosList.isEmpty
+                  ? const Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Logo(),
+                          ScreenCard(FuncionarioConstants.funcionariosCadastrados,),
+                          Center(
+                            child: Text(
+                              FuncionarioConstants.semFuncionarios,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                : ListView.separated(
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 12,
-                    ),
-                    itemCount: funcionariosList.length,
-                    itemBuilder: (context, index) {
-                      final funcionario = funcionariosList[index];
-
-                      return ListTile(
-                        title: index == 0
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  const Logo(),
-                                  const ScreenCard(FuncionarioConstants.funcionariosCadastrados,),
-                                  Column(
-                                    children: [_item(funcionario)],
-                                  )
-                                ],
-                              )
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [_item(funcionario)],
-                              ),
-                      );
-                    },
-                  );
-          }
-        },
+                        ],
+                      ),
+                    )
+                  : ListView.separated(
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 12,
+                      ),
+                      itemCount: funcionariosList.length,
+                      itemBuilder: (context, index) {
+                        final funcionario = funcionariosList[index];
+      
+                        return ListTile(
+                          title: index == 0
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    const Logo(),
+                                    const ScreenCard(FuncionarioConstants.funcionariosCadastrados,),
+                                    Column(
+                                      children: [_item(funcionario)],
+                                    )
+                                  ],
+                                )
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [_item(funcionario)],
+                                ),
+                        );
+                      },
+                    );
+            }
+          },
+        ),
       ),
     );
   }

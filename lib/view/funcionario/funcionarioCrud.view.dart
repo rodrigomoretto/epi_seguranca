@@ -4,6 +4,7 @@ import 'package:epi_seguranca/util/textForm.utils.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
 import 'package:epi_seguranca/util/widgets/customTextForm.widget.dart';
+import 'package:epi_seguranca/util/widgets/customView.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
 import 'package:epi_seguranca/util/widgets/screenCard.widget.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _FuncionarioCrudViewState extends State<FuncionarioCrudView> {
     return Scaffold(
       appBar: customAppBar,
       // Adjust Paddings
-      body: SingleChildScrollView(
+      body: CustomView(
         child: Form(
           key: _formkey,
           child: Column(
@@ -39,31 +40,28 @@ class _FuncionarioCrudViewState extends State<FuncionarioCrudView> {
                 FuncionarioConstants.funcionariosCadastrados,
                 icone: Icons.person
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 23),
-                child: Column(
-                  children: [
-                    CustomTextForm(
-                      controller: _nomeController,
-                      texto: '${FuncionarioConstants.nome}:',
-                      validador: (value) => TextFormUtils().defaultValidator(value, FuncionarioConstants.nomeValidacao),
-                    ),
-                    CustomTextForm(
-                      controller: _departamentoController,
-                      texto: '${FuncionarioConstants.departamento}:',
-                      validador: (value) => TextFormUtils().defaultValidator(value, FuncionarioConstants.departamentoValidacao),
-                    ),
-                    CustomTextForm(
-                      controller: _cargoController,
-                      texto: '${FuncionarioConstants.cargo}:',
-                      validador: (value) => TextFormUtils().defaultValidator(value, FuncionarioConstants.cargoValidacao),
-                    ),
-                    CustomTextForm(
-                      controller: _observacaoController,
-                      texto: '${FuncionarioConstants.observacao}:',
-                    ),
-                  ],
-                ),
+              Column(
+                children: [
+                  CustomTextForm(
+                    controller: _nomeController,
+                    texto: '${FuncionarioConstants.nome}:',
+                    validador: (value) => TextFormUtils().defaultValidator(value, FuncionarioConstants.nomeValidacao),
+                  ),
+                  CustomTextForm(
+                    controller: _departamentoController,
+                    texto: '${FuncionarioConstants.departamento}:',
+                    validador: (value) => TextFormUtils().defaultValidator(value, FuncionarioConstants.departamentoValidacao),
+                  ),
+                  CustomTextForm(
+                    controller: _cargoController,
+                    texto: '${FuncionarioConstants.cargo}:',
+                    validador: (value) => TextFormUtils().defaultValidator(value, FuncionarioConstants.cargoValidacao),
+                  ),
+                  CustomTextForm(
+                    controller: _observacaoController,
+                    texto: '${FuncionarioConstants.observacao}:',
+                  ),
+                ],
               ),
               CustomButton(
                 texto: ApplicationConstants.incluir,

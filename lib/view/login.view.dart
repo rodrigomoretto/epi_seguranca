@@ -3,6 +3,7 @@ import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/textForm.utils.dart';
 import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
 import 'package:epi_seguranca/util/widgets/customTextForm.widget.dart';
+import 'package:epi_seguranca/util/widgets/customView.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -21,44 +22,46 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-        key: _formkey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const Logo(),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomTextForm(
-                    controller: _usernameController, 
-                    texto: LoginConstants.nomeUsuario,
-                    validador: (value) => TextFormUtils().defaultValidator(
-                      value,
-                      LoginConstants.nomeUsuarioValidacao
+      body: CustomView(
+        child: Form(
+          key: _formkey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Logo(),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomTextForm(
+                      controller: _usernameController, 
+                      texto: LoginConstants.nomeUsuario,
+                      validador: (value) => TextFormUtils().defaultValidator(
+                        value,
+                        LoginConstants.nomeUsuarioValidacao
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomTextForm(
-                    controller: _senhaController, 
-                    texto: LoginConstants.senha,
-                    validador: (value) => TextFormUtils().defaultValidator(
-                      value,
-                      LoginConstants.senhaValidacao
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomTextForm(
+                      controller: _senhaController, 
+                      texto: LoginConstants.senha,
+                      validador: (value) => TextFormUtils().defaultValidator(
+                        value,
+                        LoginConstants.senhaValidacao
+                      ),
+                      esconder: true,
                     ),
-                    esconder: true,
                   ),
-                ),
-              ],
-            ),
-            CustomButton(
-              texto: LoginConstants.login,
-              funcao: _realizaLogin,
-            ),
-          ],
+                ],
+              ),
+              CustomButton(
+                texto: LoginConstants.login,
+                funcao: _realizaLogin,
+              ),
+            ],
+          ),
         ),
       ),
     );

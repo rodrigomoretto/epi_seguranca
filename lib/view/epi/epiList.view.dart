@@ -24,59 +24,62 @@ class _EpiListViewState extends State<EpiListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar,
-      body: FutureBuilder<List<Epi>>(
-        future: _busca(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            final List<Epi> epiList = snapshot.data!;
-
-            return epiList.isEmpty
-                ? const Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Logo(),
-                      ScreenCard(EpiConstants.episCadastrados,),
-                      Center(
-                        child: Text(
-                          EpiConstants.semEpis,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: FutureBuilder<List<Epi>>(
+          future: _busca(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              final List<Epi> epiList = snapshot.data!;
+      
+              return epiList.isEmpty
+                  ? const Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Logo(),
+                        ScreenCard(EpiConstants.episCadastrados,),
+                        Center(
+                          child: Text(
+                            EpiConstants.semEpis,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
+                      ],
+                    )
+                  : ListView.separated(
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 12,
                       ),
-                    ],
-                  )
-                : ListView.separated(
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 12,
-                    ),
-                    itemCount: epiList.length,
-                    itemBuilder: (context, index) {
-                      final epi = epiList[index];
-
-                      return ListTile(
-                        title: index == 0
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  const Logo(),
-                                  const ScreenCard(EpiConstants.episCadastrados,),
-                                  Column(
-                                    children: [_item(epi)],
-                                  )
-                                ],
-                              )
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [_item(epi)],
-                              ),
-                      );
-                    },
-                  );
-          }
-        },
+                      itemCount: epiList.length,
+                      itemBuilder: (context, index) {
+                        final epi = epiList[index];
+      
+                        return ListTile(
+                          title: index == 0
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    const Logo(),
+                                    const ScreenCard(EpiConstants.episCadastrados,),
+                                    Column(
+                                      children: [_item(epi)],
+                                    )
+                                  ],
+                                )
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [_item(epi)],
+                                ),
+                        );
+                      },
+                    );
+            }
+          },
+        ),
       ),
     );
   }
@@ -103,8 +106,8 @@ class _EpiListViewState extends State<EpiListView> {
         CLayoutItem(label: '${EpiConstants.codigo}: ', data: epi.codigo),
         CLayoutItem(label: '${EpiConstants.descricao}: ', data: epi.descricao),
         widget.funcionario != null
-          ? CLayoutItem(label: '${EpiConstants.quantidade} :', data: epi.qtdFunc.toString())
-          : CLayoutItem(label: '${EpiConstants.quantidade} :', data: epi.estoque.toString()),
+          ? CLayoutItem(label: '${EpiConstants.quantidade}: ', data: epi.qtdFunc.toString())
+          : CLayoutItem(label: '${EpiConstants.quantidade}: ', data: epi.estoque.toString()),
         CLayoutItem(label: '${EpiConstants.dataValidade}: ', data: dataValidade),
         CLayoutItem(label: '${EpiConstants.cadastro}: ', data: dataCadastro),
       ]),

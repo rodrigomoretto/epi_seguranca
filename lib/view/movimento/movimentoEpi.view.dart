@@ -2,6 +2,7 @@ import 'package:epi_seguranca/controller/movimentoEpi.controller.dart';
 import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
+import 'package:epi_seguranca/util/widgets/customView.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
 import 'package:epi_seguranca/util/widgets/screenCard.widget.dart';
 import 'package:flutter/material.dart';
@@ -13,37 +14,31 @@ class MovimentoEpiView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar,
-      // Adjust Paddings
-      body: CustomScrollView(
-        slivers: [
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: CustomView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Logo(),
+            const ScreenCard(
+              MovimentoEpiConstants.atribuicaoEpi,
+              icone: Icons.business,
+            ),
+            Column(
               children: [
-                const Logo(),
-                const ScreenCard(
-                  MovimentoEpiConstants.atribuicaoEpi,
-                  icone: Icons.business,
+                CustomButton(
+                  funcao: () => MovimentoEpiController.goToAtribuirEPI(context),
+                  texto: MovimentoEpiConstants.atribuirEpi,
+                  height: 100,
                 ),
-                Center(
-                  child: Column(
-                    children: [
-                      CustomButton(
-                        funcao: () => MovimentoEpiController.goToAtribuirEPI(context),
-                        texto: MovimentoEpiConstants.atribuirEpi,
-                      ),
-                      CustomButton(
-                        funcao: () => MovimentoEpiController.goToDevolverEPI(context),
-                        texto: MovimentoEpiConstants.devolucaoEpi,
-                      ),
-                    ],
-                  ),
+                CustomButton(
+                  funcao: () => MovimentoEpiController.goToDevolverEPI(context),
+                  texto: MovimentoEpiConstants.devolucaoEpi,
+                  height: 100,
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
