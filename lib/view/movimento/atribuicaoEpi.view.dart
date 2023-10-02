@@ -7,6 +7,7 @@ import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/textForm.utils.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
+import 'package:epi_seguranca/util/widgets/customView.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
 import 'package:epi_seguranca/util/widgets/screenCard.widget.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +35,7 @@ class _AtribuicaoEpiViewState extends State<AtribuicaoEpiView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar,
-      body: Padding(
-        padding: const EdgeInsets.all(32.0),
+      body: CustomView(
         child: Form(
           key: _formkey,
           child: Column(
@@ -82,9 +82,12 @@ class _AtribuicaoEpiViewState extends State<AtribuicaoEpiView> {
                   children: [
                     const Flexible(child: Text(
                       '${AtribuiEpiConstants.descricao}: ',
-                      // style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 18),
                     )),
-                    Flexible(child: Text(_epi.descricao)),
+                    Flexible(child: Text(
+                      _epi.descricao,
+                      style: const TextStyle(fontSize: 18),
+                    )),
                   ],
                 ),
               ),
@@ -93,8 +96,20 @@ class _AtribuicaoEpiViewState extends State<AtribuicaoEpiView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Flexible(child: Text('${AtribuiEpiConstants.quantidadeEstoque}: ')),
-                    Flexible(child: Text(_epi.estoque.toString())),
+                    const Flexible(
+                      flex: 3,
+                      child: Text(
+                        '${AtribuiEpiConstants.quantidadeEstoque}: ',
+                        style: TextStyle(fontSize: 18),
+                      )
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: Text(
+                        _epi.estoque.toString(),
+                        style: const TextStyle(fontSize: 18),
+                      )
+                    ),
                   ],
                 ),
               ),
@@ -134,8 +149,14 @@ class _AtribuicaoEpiViewState extends State<AtribuicaoEpiView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Flexible(child: Text('${AtribuiEpiConstants.nome}: ')),
-                    Flexible(child: Text(_funcionario.nome)),
+                    const Flexible(child: Text(
+                      '${AtribuiEpiConstants.nome}: ',
+                      style: TextStyle(fontSize: 18),
+                    )),
+                    Flexible(child: Text(
+                      _funcionario.nome,
+                      style: const TextStyle(fontSize: 18),
+                    )),
                   ],
                 ),
               ),
@@ -144,8 +165,14 @@ class _AtribuicaoEpiViewState extends State<AtribuicaoEpiView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Flexible(child: Text('${AtribuiEpiConstants.departamento}: ')),
-                    Flexible(child: Text(_funcionario.departamento)),
+                    const Flexible(child: Text(
+                      '${AtribuiEpiConstants.departamento}: ',
+                      style: TextStyle(fontSize: 18),
+                    )),
+                    Flexible(child: Text(
+                      _funcionario.departamento,
+                      style: const TextStyle(fontSize: 18),
+                    )),
                   ],
                 ),
               ),
@@ -156,12 +183,11 @@ class _AtribuicaoEpiViewState extends State<AtribuicaoEpiView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Flexible(
-                      flex: 2,
-                      child: Text('${AtribuiEpiConstants.quantidadeAtribuir}: ')
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Container()
+                      flex: 3,
+                      child: Text(
+                        '${AtribuiEpiConstants.quantidadeAtribuir}: ',
+                        style: TextStyle(fontSize: 18),
+                      )
                     ),
                     Flexible(
                       flex: 2,

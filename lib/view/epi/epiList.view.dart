@@ -42,6 +42,7 @@ class _EpiListViewState extends State<EpiListView> {
                       children: [
                         Logo(),
                         ScreenCard(EpiConstants.episCadastrados,),
+                        SizedBox(height: 16,),
                         Center(
                           child: Text(
                             EpiConstants.semEpis,
@@ -65,6 +66,7 @@ class _EpiListViewState extends State<EpiListView> {
                                   children: <Widget>[
                                     const Logo(),
                                     const ScreenCard(EpiConstants.episCadastrados,),
+                                    const SizedBox(height: 16,),
                                     Column(
                                       children: [_item(epi)],
                                     )

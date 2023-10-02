@@ -11,6 +11,7 @@ class ScreenCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Flexible(
+          flex: 3,
           child: Text(
             texto,
             style: const TextStyle(
@@ -22,6 +23,7 @@ class ScreenCard extends StatelessWidget {
         Visibility(
           visible: icone != null,
           child: Flexible(
+            flex: 1,
             child: Icon(
               icone,
               size: 50,

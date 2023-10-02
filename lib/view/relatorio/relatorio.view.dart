@@ -14,7 +14,6 @@ class RelatorioView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar,
-      // Adjust Paddings
       body: CustomView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -26,10 +25,12 @@ class RelatorioView extends StatelessWidget {
                 CustomButton(
                   texto: RelatorioConstants.funcionariosCadastrados,
                   funcao: () => RelatorioController.goToFuncionariosCadastrados(context),
+                  height: 100,
                 ),
                 CustomButton(
                   texto: RelatorioConstants.episCadastrados,
                   funcao: () => RelatorioController.goToEPIsCadastrados(context),
+                  height: 100,
                 ),
               ],
             ),

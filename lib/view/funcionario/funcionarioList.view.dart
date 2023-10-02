@@ -44,6 +44,7 @@ class _FuncionarioListViewState extends State<FuncionarioListView> {
                         children: [
                           Logo(),
                           ScreenCard(FuncionarioConstants.funcionariosCadastrados,),
+                          SizedBox(height: 16,),
                           Center(
                             child: Text(
                               FuncionarioConstants.semFuncionarios,
@@ -68,6 +69,7 @@ class _FuncionarioListViewState extends State<FuncionarioListView> {
                                   children: <Widget>[
                                     const Logo(),
                                     const ScreenCard(FuncionarioConstants.funcionariosCadastrados,),
+                                    const SizedBox(height: 16,),
                                     Column(
                                       children: [_item(funcionario)],
                                     )
