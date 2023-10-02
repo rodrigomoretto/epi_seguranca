@@ -43,7 +43,7 @@ final ThemeData defaultTheme =  ThemeData(
         color: Colors.white,
         fontWeight: FontWeight.bold,
         fontSize: 24,
-      ))
+      )),
     ),
   ),
 );
