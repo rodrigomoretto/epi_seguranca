@@ -1,5 +1,5 @@
 import 'package:epi_seguranca/controller/epi.controller.dart';
-import 'package:epi_seguranca/controller/movimento/movimentoEpi.controller.dart';
+import 'package:epi_seguranca/controller/movimentoEpi.controller.dart';
 import 'package:epi_seguranca/database/database_service.dart';
 import 'package:epi_seguranca/model/epi.model.dart';
 import 'package:epi_seguranca/model/funcionario.model.dart';

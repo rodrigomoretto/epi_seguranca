@@ -1,4 +1,4 @@
-import 'package:epi_seguranca/controller/movimento/movimentoEpi.controller.dart';
+import 'package:epi_seguranca/controller/movimentoEpi.controller.dart';
 import 'package:epi_seguranca/model/epi.model.dart';
 import 'package:epi_seguranca/model/funcionario.model.dart';
 import 'package:epi_seguranca/model/movimento.model.dart';

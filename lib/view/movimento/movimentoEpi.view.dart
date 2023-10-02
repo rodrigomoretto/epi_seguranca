@@ -1,4 +1,4 @@
-import 'package:epi_seguranca/controller/movimento/movimentoEpi.controller.dart';
+import 'package:epi_seguranca/controller/movimentoEpi.controller.dart';
 import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
