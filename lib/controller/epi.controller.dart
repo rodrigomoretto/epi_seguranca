@@ -1,8 +1,18 @@
 import 'package:epi_seguranca/database/database_service.dart';
 import 'package:epi_seguranca/model/epi.model.dart';
+import 'package:epi_seguranca/view/epi/epiCrud.view.dart';
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 class EpiController {
+  // Rotas
+
+  static Future<void> goToEpiEdicao(BuildContext context, {required Epi epi}) async {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) => EpiCrudView(epi: epi,)));
+  }
+
+  // Estrutura Banco de Dados
+  
   final DatabaseService _dataBaseService = DatabaseService();
 
   final _table = 'epi';

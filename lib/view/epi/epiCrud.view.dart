@@ -1,4 +1,5 @@
 import 'package:epi_seguranca/controller/epi.controller.dart';
+import 'package:epi_seguranca/model/epi.model.dart';
 import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/textForm.utils.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
@@ -11,7 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EpiCrudView extends StatefulWidget {
-  const EpiCrudView({super.key});
+  final Epi? epi;
+  const EpiCrudView({this.epi, super.key});
 
   @override
   State<EpiCrudView> createState() => _EpiCrudViewState();
@@ -29,9 +31,12 @@ class _EpiCrudViewState extends State<EpiCrudView> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.epi != null) {
+      _preencheEpiEdicao();
+    }
+    
     return Scaffold(
       appBar: customAppBar,
-      // Adjust Paddings
       body: CustomView(
         child: Form(
           key: _formkey,
@@ -82,6 +87,14 @@ class _EpiCrudViewState extends State<EpiCrudView> {
     );
   }
 
+  void _preencheEpiEdicao() {
+    _codigoController.text = widget.epi!.codigo;
+    _descricaoController.text = widget.epi!.descricao;
+    _estoqueController.text = widget.epi!.estoque.toString();
+    _dataValidade = widget.epi!.dataValidade;
+    _dataValidadeController.text = DateFormat.yMd().format(_dataValidade);
+  }
+
   Future<void> _selecionaDataValidade() async {
     DateTime? date = await showDatePicker(
       context: context,
@@ -99,12 +112,22 @@ class _EpiCrudViewState extends State<EpiCrudView> {
   Future<void> _salvar() async {
     if (_formkey.currentState!.validate()) {
       _formkey.currentState!.save();
-      await EpiController().createEpi(
-        codigo: _codigoController.text,
-        descricao: _descricaoController.text,
-        estoque: int.parse(_estoqueController.text),
-        dataValidade: _dataValidade,
-      );
+      if (widget.epi == null) {
+        await EpiController().createEpi(
+          codigo: _codigoController.text,
+          descricao: _descricaoController.text,
+          estoque: int.parse(_estoqueController.text),
+          dataValidade: _dataValidade,
+        );
+      } else {
+        await EpiController().updateEpi(
+          id: widget.epi!.id,
+          codigo: _codigoController.text,
+          descricao: _descricaoController.text,
+          estoque: int.parse(_estoqueController.text),
+          dataValidade: _dataValidade,
+        );
+      }
       if (!context.mounted) return;
       Navigator.of(context).pop();
     }

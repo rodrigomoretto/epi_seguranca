@@ -97,9 +97,13 @@ class _EpiListViewState extends State<EpiListView> {
     final dataCadastro = DateFormat.yMd().format(epi.cadastro!);
     final dataValidade = DateFormat.yMd().format(epi.dataValidade);
     return InkWell(
-      onTap: () {
+      onTap: () async {
         if (widget.selecao) {
           Navigator.pop(context, epi);
+        }
+        else {
+          await EpiController.goToEpiEdicao(context, epi: epi);
+          setState(() {});
         }
       },
       child: CustomListItem(layout: [
