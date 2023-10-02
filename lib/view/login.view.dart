@@ -1,5 +1,6 @@
 import 'package:epi_seguranca/controller/login.controller.dart';
 import 'package:epi_seguranca/util/constants/string.constants.dart';
+import 'package:epi_seguranca/util/textForm.utils.dart';
 import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
 import 'package:epi_seguranca/util/widgets/customTextForm.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
@@ -33,9 +34,10 @@ class _LoginViewState extends State<LoginView> {
                   child: CustomTextForm(
                     controller: _usernameController, 
                     texto: LoginConstants.nomeUsuario,
-                    validador: (value) => value != null && value.isEmpty
-                      ? LoginConstants.nomeUsuarioValidacao
-                      : null,
+                    validador: (value) => TextFormUtils().defaultValidator(
+                      value,
+                      LoginConstants.nomeUsuarioValidacao
+                    ),
                   ),
                 ),
                 Padding(
@@ -43,9 +45,10 @@ class _LoginViewState extends State<LoginView> {
                   child: CustomTextForm(
                     controller: _senhaController, 
                     texto: LoginConstants.senha,
-                    validador: (value) => value != null && value.isEmpty
-                      ? LoginConstants.senhaValidacao
-                      : null,
+                    validador: (value) => TextFormUtils().defaultValidator(
+                      value,
+                      LoginConstants.senhaValidacao
+                    ),
                     esconder: true,
                   ),
                 ),
@@ -53,39 +56,41 @@ class _LoginViewState extends State<LoginView> {
             ),
             CustomButton(
               texto: LoginConstants.login,
-              funcao: () async {
-                if (_formkey.currentState!.validate()) {
-                  _formkey.currentState!.save();
-                  final resultado = await LoginController().verificaLogin(
-                    _usernameController.text, _senhaController.text
-                  );
-                  if (resultado == null) {
-                    if (!context.mounted) return;
-                    showAdaptiveDialog(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog.adaptive(
-                        title: const Text(ApplicationConstants.aviso),
-                        content: const Text(LoginConstants.usuarioSenhaInvalido),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text(ApplicationConstants.ok),
-                          )
-                        ],
-                      ),
-                    );
-                    _usernameController.clear();
-                    _senhaController.clear();
-                  } else {
-                    if (!context.mounted) return;
-                    LoginController.goToHome(context, resultado.nome);
-                  }
-                }
-              },
+              funcao: _realizaLogin,
             ),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _realizaLogin() async {
+    if (_formkey.currentState!.validate()) {
+      _formkey.currentState!.save();
+      final resultado = await LoginController().verificaLogin(
+        _usernameController.text, _senhaController.text
+      );
+      if (resultado == null) {
+        if (!context.mounted) return;
+        showAdaptiveDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog.adaptive(
+            title: const Text(ApplicationConstants.aviso),
+            content: const Text(LoginConstants.usuarioSenhaInvalido),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text(ApplicationConstants.ok),
+              )
+            ],
+          ),
+        );
+        _usernameController.clear();
+        _senhaController.clear();
+      } else {
+        if (!context.mounted) return;
+        LoginController.goToHome(context, resultado.nome);
+      }
+    }
   }
 }
