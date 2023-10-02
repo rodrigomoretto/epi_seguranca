@@ -1,4 +1,5 @@
 import 'package:epi_seguranca/controller/funcionario.controller.dart';
+import 'package:epi_seguranca/model/funcionario.model.dart';
 import 'package:epi_seguranca/util/constants/string.constants.dart';
 import 'package:epi_seguranca/util/textForm.utils.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
@@ -10,7 +11,8 @@ import 'package:epi_seguranca/util/widgets/screenCard.widget.dart';
 import 'package:flutter/material.dart';
 
 class FuncionarioCrudView extends StatefulWidget {
-  const FuncionarioCrudView({super.key});
+  final Funcionario? funcionario;
+  const FuncionarioCrudView({this.funcionario, super.key});
 
   @override
   State<FuncionarioCrudView> createState() => _FuncionarioCrudViewState();
@@ -25,9 +27,11 @@ class _FuncionarioCrudViewState extends State<FuncionarioCrudView> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.funcionario != null) {
+      _preencheFuncionarioEdicao();
+    }
     return Scaffold(
       appBar: customAppBar,
-      // Adjust Paddings
       body: CustomView(
         child: Form(
           key: _formkey,
@@ -74,14 +78,32 @@ class _FuncionarioCrudViewState extends State<FuncionarioCrudView> {
     );
   }
 
+  void _preencheFuncionarioEdicao() {
+    _nomeController.text = widget.funcionario!.nome;
+    _departamentoController.text = widget.funcionario!.departamento;
+    _cargoController.text = widget.funcionario!.cargo;
+    _observacaoController.text = widget.funcionario!.observacao ?? '';
+  }
+
   Future<void> _salvar() async {
     if (_formkey.currentState!.validate()) {
       _formkey.currentState!.save();
-      await FuncionarioController().createFuncionario(
+      if (widget.funcionario == null) {
+        await FuncionarioController().createFuncionario(
           nome: _nomeController.text,
           departamento: _departamentoController.text,
           cargo: _cargoController.text,
-          observacao: _observacaoController.text);
+          observacao: _observacaoController.text
+        );
+      } else {
+        await FuncionarioController().updateFuncionario(
+          id: widget.funcionario!.id,
+          nome: _nomeController.text,
+          departamento: _departamentoController.text,
+          cargo: _cargoController.text,
+          observacao: _observacaoController.text
+        );
+      }
       if (!context.mounted) return;
       Navigator.of(context).pop();
     }

@@ -5,9 +5,19 @@ import 'package:epi_seguranca/model/epi.model.dart';
 import 'package:epi_seguranca/model/funcionario.model.dart';
 import 'package:epi_seguranca/model/movimento.model.dart';
 import 'package:epi_seguranca/util/constants/app.constants.dart';
+import 'package:epi_seguranca/view/funcionario/funcionarioCrud.view.dart';
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FuncionarioController {
+  // Rotas
+
+  static Future<void> goToFuncionarioEdicao(BuildContext context, {required Funcionario funcionario}) async {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) => FuncionarioCrudView(funcionario: funcionario,)));
+  }
+
+  // Estrutura Banco de Dados
+
   final DatabaseService _dataBaseService = DatabaseService();
 
   final table = 'funcionario';

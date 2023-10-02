@@ -27,7 +27,6 @@ class _FuncionarioListViewState extends State<FuncionarioListView> {
           left: 16,
           right: 4,
         ),
-        // padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: FutureBuilder<List<Funcionario>>(
           future: FuncionarioController().fetchAllFuncionario(),
           builder: (context, snapshot) {
@@ -91,9 +90,13 @@ class _FuncionarioListViewState extends State<FuncionarioListView> {
   Widget _item(Funcionario funcionario) {
     final List<CLayoutItem> lista = _criaLista(funcionario);
     return InkWell(
-      onTap: () {
+      onTap: () async {
         if (widget.selecao) {
           Navigator.pop(context, funcionario);
+        }
+        else {
+          await FuncionarioController.goToFuncionarioEdicao(context, funcionario: funcionario);
+          setState(() {});
         }
       },
       child: CustomListItem(layout: lista),
