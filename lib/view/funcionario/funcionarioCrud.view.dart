@@ -1,5 +1,6 @@
 import 'package:epi_seguranca/controller/funcionario.controller.dart';
 import 'package:epi_seguranca/util/constants/string.constants.dart';
+import 'package:epi_seguranca/util/textForm.utils.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
 import 'package:epi_seguranca/util/widgets/customTextForm.widget.dart';
@@ -45,23 +46,17 @@ class _FuncionarioCrudViewState extends State<FuncionarioCrudView> {
                     CustomTextForm(
                       controller: _nomeController,
                       texto: '${FuncionarioConstants.nome}:',
-                      validador: (value) => value != null && value.isEmpty
-                          ? FuncionarioConstants.nomeValidacao
-                          : null,
+                      validador: (value) => TextFormUtils().defaultValidator(value, FuncionarioConstants.nomeValidacao),
                     ),
                     CustomTextForm(
                       controller: _departamentoController,
                       texto: '${FuncionarioConstants.departamento}:',
-                      validador: (value) => value != null && value.isEmpty
-                          ? FuncionarioConstants.departamentoValidacao
-                          : null,
+                      validador: (value) => TextFormUtils().defaultValidator(value, FuncionarioConstants.departamentoValidacao),
                     ),
                     CustomTextForm(
                       controller: _cargoController,
                       texto: '${FuncionarioConstants.cargo}:',
-                      validador: (value) => value != null && value.isEmpty
-                          ? FuncionarioConstants.cargoValidacao
-                          : null,
+                      validador: (value) => TextFormUtils().defaultValidator(value, FuncionarioConstants.cargoValidacao),
                     ),
                     CustomTextForm(
                       controller: _observacaoController,
@@ -72,23 +67,25 @@ class _FuncionarioCrudViewState extends State<FuncionarioCrudView> {
               ),
               CustomButton(
                 texto: ApplicationConstants.incluir,
-                funcao: () async {
-                  if (_formkey.currentState!.validate()) {
-                    _formkey.currentState!.save();
-                    await FuncionarioController().createFuncionario(
-                        nome: _nomeController.text,
-                        departamento: _departamentoController.text,
-                        cargo: _cargoController.text,
-                        observacao: _observacaoController.text);
-                    if (!context.mounted) return;
-                    Navigator.of(context).pop();
-                  }
-                },
+                funcao: _salvar,
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _salvar() async {
+    if (_formkey.currentState!.validate()) {
+      _formkey.currentState!.save();
+      await FuncionarioController().createFuncionario(
+          nome: _nomeController.text,
+          departamento: _departamentoController.text,
+          cargo: _cargoController.text,
+          observacao: _observacaoController.text);
+      if (!context.mounted) return;
+      Navigator.of(context).pop();
+    }
   }
 }

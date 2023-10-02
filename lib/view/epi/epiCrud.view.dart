@@ -1,5 +1,6 @@
 import 'package:epi_seguranca/controller/epi.controller.dart';
 import 'package:epi_seguranca/util/constants/string.constants.dart';
+import 'package:epi_seguranca/util/textForm.utils.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
 import 'package:epi_seguranca/util/widgets/customTextForm.widget.dart';
@@ -49,65 +50,65 @@ class _EpiCrudViewState extends State<EpiCrudView> {
                     CustomTextForm(
                       controller: _codigoController,
                       texto: '${EpiConstants.codigo}:',
-                      validador: (value) =>
-                        value != null && value.isEmpty ? EpiConstants.codigoValidacao : null,
+                      validador: (value) => TextFormUtils().defaultValidator(value, EpiConstants.codigoValidacao),
                     ),
                     CustomTextForm(
                       controller: _descricaoController,
                       texto: '${EpiConstants.descricao}:',
-                      validador: (value) =>
-                        value != null && value.isEmpty ? EpiConstants.descricaoValidacao : null,
+                      validador: (value) => TextFormUtils().defaultValidator(value, EpiConstants.descricaoValidacao),
                     ),
                     CustomTextForm(
                       controller: _estoqueController,
                       texto: '${EpiConstants.estoque}:',
                       teclado: TextInputType.number,
-                      validador: (value) =>
-                        value != null && value.isEmpty ? EpiConstants.estoqueValidacao : null,
+                      validador: (value) => TextFormUtils().defaultValidator(value, EpiConstants.estoqueValidacao),
                     ),
                     CustomTextForm(
                       controller: _dataValidadeController,
                       texto: '${EpiConstants.dataValidade}:',
                       readOnly: true,
-                      funcao: () async {
-                        DateTime? date = await showDatePicker(
-                          context: context,
-                          initialDate: _dataValidade,
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime(2100),
-                        );
-
-                        if (date != null) {
-                          _dataValidade = date;
-                          _dataValidadeController.text = DateFormat.yMd().format(_dataValidade);
-                        }
-                      },
-                      validador: (value) =>
-                        value != null && value.isEmpty ? EpiConstants.dataValidadeValidacao : null,
+                      funcao: _selecionaDataValidade,
+                      validador: (value) => TextFormUtils().defaultValidator(value, EpiConstants.dataValidadeValidacao),
                     ),
                   ],
                 ),
               ),
               CustomButton(
                 texto: ApplicationConstants.incluir,
-                funcao: () async {
-                  if (_formkey.currentState!.validate()) {
-                    _formkey.currentState!.save();
-                    await EpiController().createEpi(
-                      codigo: _codigoController.text,
-                      descricao: _descricaoController.text,
-                      estoque: int.parse(_estoqueController.text),
-                      dataValidade: _dataValidade,
-                    );
-                    if (!context.mounted) return;
-                    Navigator.of(context).pop();
-                  }
-                },
+                funcao: _salvar,
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _selecionaDataValidade() async {
+    DateTime? date = await showDatePicker(
+      context: context,
+      initialDate: _dataValidade,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+    );
+
+    if (date != null) {
+      _dataValidade = date;
+      _dataValidadeController.text = DateFormat.yMd().format(_dataValidade);
+    }
+  }
+
+  Future<void> _salvar() async {
+    if (_formkey.currentState!.validate()) {
+      _formkey.currentState!.save();
+      await EpiController().createEpi(
+        codigo: _codigoController.text,
+        descricao: _descricaoController.text,
+        estoque: int.parse(_estoqueController.text),
+        dataValidade: _dataValidade,
+      );
+      if (!context.mounted) return;
+      Navigator.of(context).pop();
+    }
   }
 }
