@@ -4,6 +4,7 @@ import 'package:epi_seguranca/model/funcionario.model.dart';
 import 'package:epi_seguranca/model/movimento.model.dart';
 import 'package:epi_seguranca/util/constants/app.constants.dart';
 import 'package:epi_seguranca/util/constants/string.constants.dart';
+import 'package:epi_seguranca/util/textForm.utils.dart';
 import 'package:epi_seguranca/util/widgets/customAppBar.widget.dart';
 import 'package:epi_seguranca/util/widgets/customButton.widget.dart';
 import 'package:epi_seguranca/util/widgets/logo.widget.dart';
@@ -71,18 +72,8 @@ class _DevolucaoEpiViewState extends State<DevolucaoEpiView> {
                           decoration: const InputDecoration(
                             suffixIcon: Icon(Icons.search),
                           ),
-                          onTap: () async {
-                            final resultado = await MovimentoEpiController.goToFuncionarioSelecao(context);
-                            if (resultado != null) {
-                              setState(() {
-                                _funcionario = resultado;
-                              });
-                              _funcionarioController.text = _funcionario.id.toString();
-                            }
-                          },
-                          validator: (value) => value != null && value.isEmpty
-                            ? DevolveEpiConstants.funcionarioValidacao
-                            : null,
+                          onTap: _selecionaFuncionario,
+                          validator: (value) => TextFormUtils().defaultValidator(value, DevolveEpiConstants.funcionarioValidacao),
                         ),
                       ),
                     ],
@@ -136,35 +127,8 @@ class _DevolucaoEpiViewState extends State<DevolucaoEpiView> {
                                 decoration: const InputDecoration(
                                   suffixIcon: Icon(Icons.search),
                                 ),
-                                onTap: () async {
-                                  final List<int> idsEpis = List.empty(growable: true);
-                
-                                  for (Epi epi in _funcionario.episAtribuidos!) {
-                                    idsEpis.add(epi.id);
-                                  }
-                                  final resultado = await MovimentoEpiController.goToEpiSelecao(
-                                    context, funcionario: _funcionario
-                                  );
-                                  if (resultado != null) {
-                                    for (var epiFunc in _funcionario.episAtribuidos!) {
-                                      if (epiFunc.id == resultado.id) {
-                                        setState(() {
-                                          _quantidade = epiFunc.qtdFunc;
-                                        });
-                                        break;
-                                      }
-                                    }
-                
-                                    setState(() {
-                                      _epi = resultado;
-                                    });
-                                    _epiController.text = _epi.codigo;
-                                    _quantidadeController.text = _quantidade.toString();
-                                  }
-                                },
-                                validator: (value) => value != null && value.isEmpty
-                                  ? DevolveEpiConstants.epiDevolvidoValidacao
-                                  : null,
+                                onTap: _selecionaEPI,
+                                validator: (value) => TextFormUtils().defaultValidator(value, DevolveEpiConstants.epiDevolvidoValidacao),
                               ),
                             ),
                           ],
@@ -228,21 +192,11 @@ class _DevolucaoEpiViewState extends State<DevolucaoEpiView> {
                           readOnly: true,
                           decoration: InputDecoration(
                             prefixIcon: InkWell(
-                              onTap: () {
-                                if (_quantidade <= _epi.qtdFunc && _quantidade > 1) {
-                                  _quantidade--;
-                                  _quantidadeController.text = _quantidade.toString();
-                                }
-                              },
+                              onTap: _diminuiQuantidade,
                               child: const Icon(Icons.remove),
                             ),
                             suffixIcon: InkWell(
-                              onTap: () {
-                                if (_quantidade < _epi.qtdFunc && _quantidade >= 1) {
-                                  _quantidade++;
-                                  _quantidadeController.text = _quantidade.toString();
-                                }
-                              },
+                              onTap: _aumentaQuantidade,
                               child: const Icon(Icons.add),
                             ),
                           ),
@@ -264,11 +218,7 @@ class _DevolucaoEpiViewState extends State<DevolucaoEpiView> {
                       Flexible(
                         child: Switch.adaptive(
                           value: _descarte,
-                          onChanged: (bool value) {
-                            setState(() {
-                              _descarte = value;
-                            });
-                          }
+                          onChanged: _alteraDescarte,
                         )
                       ),
                     ],
@@ -284,35 +234,13 @@ class _DevolucaoEpiViewState extends State<DevolucaoEpiView> {
                       border: OutlineInputBorder(borderSide: BorderSide(style: BorderStyle.solid)),
                     ),
                     maxLines: 5,
-                    validator: (value) => value != null && value.isEmpty
-                      ? DevolveEpiConstants.motivoValidacao
-                      : null,
+                    validator: (value) => TextFormUtils().defaultValidator(value, DevolveEpiConstants.motivoValidacao),
                   ),
                 ),
       
                 CustomButton(
                   texto: ApplicationConstants.incluir,
-                  funcao: () async {
-                    if(_descarte) {
-                      _idTipoMovimento = CodigoMovimentoConstants.entradaDescarte;
-                    }
-
-                    if (_formkey.currentState!.validate()) {
-                      _formkey.currentState!.save();
-                      _movimento = Movimento.fromMovimento(
-                        idFuncMov: _funcionario.id,
-                        idEpiMov: _epi.id,
-                        idTipoMovMov: _idTipoMovimento,
-                        quantidadeMov: _quantidade,
-                      );
-                      await MovimentoEpiController().createMovimento(
-                        movimento: _movimento,
-                        epi: _epi
-                      );
-                      if (!context.mounted) return;
-                      Navigator.of(context).pop();
-                    }
-                  }
+                  funcao: _salvar,
                 ),
               ],
             ),
@@ -320,5 +248,84 @@ class _DevolucaoEpiViewState extends State<DevolucaoEpiView> {
         ),
       ),
     );
+  }
+
+  Future<void> _selecionaFuncionario() async {
+    final resultado = await MovimentoEpiController.goToFuncionarioSelecao(context);
+    if (resultado != null) {
+      setState(() {
+        _funcionario = resultado;
+      });
+      _funcionarioController.text = _funcionario.id.toString();
+    }
+  }
+
+  Future<void> _selecionaEPI() async {
+    final List<int> idsEpis = List.empty(growable: true);
+                
+    for (Epi epi in _funcionario.episAtribuidos!) {
+      idsEpis.add(epi.id);
+    }
+    final resultado = await MovimentoEpiController.goToEpiSelecao(
+      context, funcionario: _funcionario
+    );
+    if (resultado != null) {
+      for (var epiFunc in _funcionario.episAtribuidos!) {
+        if (epiFunc.id == resultado.id) {
+          setState(() {
+            _quantidade = epiFunc.qtdFunc;
+          });
+          break;
+        }
+      }
+
+      setState(() {
+        _epi = resultado;
+      });
+      _epiController.text = _epi.codigo;
+      _quantidadeController.text = _quantidade.toString();
+    }
+  }
+
+  void _diminuiQuantidade() {
+    if (_quantidade <= _epi.qtdFunc && _quantidade > 1) {
+      _quantidade--;
+      _quantidadeController.text = _quantidade.toString();
+    }
+  }
+
+  void _aumentaQuantidade() {
+    if (_quantidade < _epi.qtdFunc && _quantidade >= 1) {
+      _quantidade++;
+      _quantidadeController.text = _quantidade.toString();
+    }
+  }
+
+  void _alteraDescarte(bool value) {
+    setState(() {
+      _descarte = value;
+    });
+  }
+
+  Future<void> _salvar() async {
+    if(_descarte) {
+      _idTipoMovimento = CodigoMovimentoConstants.entradaDescarte;
+    }
+
+    if (_formkey.currentState!.validate()) {
+      _formkey.currentState!.save();
+      _movimento = Movimento.fromMovimento(
+        idFuncMov: _funcionario.id,
+        idEpiMov: _epi.id,
+        idTipoMovMov: _idTipoMovimento,
+        quantidadeMov: _quantidade,
+      );
+      await MovimentoEpiController().createMovimento(
+        movimento: _movimento,
+        epi: _epi
+      );
+      if (!context.mounted) return;
+      Navigator.of(context).pop();
+    }
   }
 }
