@@ -84,11 +84,6 @@ class MovimentoEpiController {
       default:
         return 1;
     }
-    
-    // return await EpiController().updateEpi(
-    //   id: epi.id,
-    //   estoque: epi.estoque - movimento.quantidade
-    // );
   }
 
   Future<List<Movimento>> fetchAllMovimento() async {
@@ -118,7 +113,6 @@ class MovimentoEpiController {
 
     final database = await _dataBaseService.database;
     
-    // final epis = await database.rawQuery('SELECT * FROM $table WHERE id_funcionario = ?');
     for (Epi epi in funcionario.episAtribuidos!) {
       epi.qtdFunc = 0;
       final List<Movimento> movimentos;

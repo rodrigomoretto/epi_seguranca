@@ -30,8 +30,4 @@ class HomeController {
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) => const LoginView()));
   }
-
-  // static Future<bool> goToClienteCadastro(BuildContext context, {Cliente cliente}) async {
-  //   return await Navigator.push(context, MaterialPageRoute(builder: (context) => ClienteCadastroPage(cliente: cliente)));
-  // }
 }

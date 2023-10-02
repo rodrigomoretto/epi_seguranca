@@ -74,20 +74,16 @@ class FuncionarioController {
         }
 
         for (Movimento movimento in movimentosFuncionario) {
-          // for (var element in func.episAtribuidos!) {
           for (Epi epi in listaEpis) {
             if (epi.id == movimento.idEpi) {
               switch (movimento.idTipoMov) {
                 case CodigoMovimentoConstants.saidaAtribuicao:
-                  // epi.qtdFunc = epi.qtdFunc + movimento.quantidade;
                   epi.qtdFunc += movimento.quantidade;
                   break;
                 case CodigoMovimentoConstants.entradaDevolucao:
-                  // epi.qtdFunc = epi.qtdFunc - movimento.quantidade;
                   epi.qtdFunc -= movimento.quantidade;
                   break;
                 case CodigoMovimentoConstants.entradaDescarte:
-                  // epi.qtdFunc = epi.qtdFunc - movimento.quantidade;
                   epi.qtdFunc -= movimento.quantidade;
                   break;
                 default:
