@@ -10,18 +10,22 @@ class ScreenCard extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          texto,
-          style: const TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
+        Flexible(
+          child: Text(
+            texto,
+            style: const TextStyle(
+              fontSize: 27,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         Visibility(
           visible: icone != null,
-          child: Icon(
-            icone,
-            size: 50,
+          child: Flexible(
+            child: Icon(
+              icone,
+              size: 50,
+            ),
           ),
         ),
       ],
