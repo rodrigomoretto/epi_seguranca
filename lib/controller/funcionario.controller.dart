@@ -102,14 +102,12 @@ class FuncionarioController {
           }
         }
 
-        // Remove EPIs que estão com quantidade menor ou igual a zero atribuída ao funcionário
-        for (var epi in func.episAtribuidos!) {
-          if (epi.qtdFunc <= 0) {
-            func.episAtribuidos!.remove(epi);
+        // Adiciona EPIs que estão com quantidade maior que zero atribuída ao funcionário
+        for (var epi in listaEpis) {
+          if (epi.qtdFunc > 0) {
+            func.episAtribuidos!.add(epi);
           }
         }
-
-        func.episAtribuidos = listaEpis;
       }
       
     }
